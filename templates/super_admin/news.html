@@ -1,0 +1,707 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Management</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 2rem 0;
+            position: fixed;
+            height: 100vh;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+        }
+
+        .sidebar-header {
+            padding: 0 2rem;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .logo-text {
+            color: #2d3748;
+            font-size: 1.4rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar.collapsed .logo-text {
+            opacity: 0;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0 1rem;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: #4a5568;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-text {
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar.collapsed .nav-text {
+            opacity: 0;
+        }
+
+        .logout-section {
+            position: absolute;
+            bottom: 2rem;
+            left: 1rem;
+            right: 1rem;
+        }
+
+        .logout-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: #e53e3e;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(229, 62, 62, 0.3);
+        }
+
+        .logout-link:hover {
+            background: rgba(229, 62, 62, 0.1);
+            border-color: rgba(229, 62, 62, 0.5);
+            color: #c53030;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+            transition: margin-left 0.3s ease;
+        }
+
+        .sidebar.collapsed+.main-content {
+            margin-left: 80px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #4a5568;
+            font-size: 1.1rem;
+        }
+
+        .add-btn, .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 12px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .add-btn:hover, .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-warning {
+            background: linear-gradient(45deg, #f6e05e, #d69e2e);
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: #2d3748;
+            transition: all 0.3s ease;
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(214, 158, 46, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #e53e3e, #c53030);
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(229, 62, 62, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            color: #4a5568;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.6s ease forwards;
+        }
+
+        .container h2 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .table {
+            background: transparent;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .table th {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+        }
+
+        .table td {
+            background: rgba(255, 255, 255, 0.95);
+            color: #2d3748;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .table img {
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .table img:hover {
+            transform: scale(1.05);
+        }
+
+        .badge.bg-success {
+            background: linear-gradient(45deg, #48bb78, #2f855a);
+        }
+
+        .badge.bg-secondary {
+            background: linear-gradient(45deg, #a0aec0, #718096);
+        }
+
+        /* Modal Styles */
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            border-bottom: none;
+            padding: 1.5rem 2rem;
+        }
+
+        .modal-title {
+            color: #2d3748;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .form-control, .form-select {
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.9);
+            color: #2d3748;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .modal-footer {
+            border-top: none;
+            padding: 1rem 2rem;
+        }
+
+        /* DataTable Customizations */
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_filter {
+            margin-bottom: 1rem;
+            color: #4a5568;
+        }
+
+        .dataTables_wrapper .dataTables_length select,
+        .dataTables_wrapper .dataTables_filter input {
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.9);
+            color: #4a5568;
+            padding: 0.5rem;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            border-radius: 8px;
+            margin: 0 0.25rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: #4a5568;
+            transition: all 0.3s ease;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 280px;
+                transform: translateX(-100%);
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .toggle-btn {
+                position: fixed;
+                top: 1rem;
+                left: 1rem;
+                z-index: 1002;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <button class="toggle-btn" onclick="toggleSidebar()">
+                <span id="toggle-icon">‹</span>
+            </button>
+            <div class="sidebar-header">
+                <div class="logo">A</div>
+                <span class="logo-text">Admin</span>
+            </div>
+            <nav role="navigation">
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="/super-admin/dashboard/" class="nav-link" onclick="setActive(this)">
+                            <span class="nav-icon">📊</span>
+                            <span class="nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/news/" class="nav-link active" onclick="setActive(this)">
+                            <span class="nav-icon">📰</span>
+                            <span class="nav-text">News</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/banners/" class="nav-link" onclick="setActive(this)">
+                            <span class="nav-icon">🎯</span>
+                            <span class="nav-text">Banners</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/customers/" class="nav-link" onclick="setActive(this)">
+                            <span class="nav-icon">👥</span>
+                            <span class="nav-text">Customers</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/payments/" class="nav-link" onclick="setActive(this)">
+                            <span class="nav-icon">💳</span>
+                            <span class="nav-text">Payments</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/about-us/" class="nav-link" onclick="setActive(this)">
+                            <span class="nav-icon">ℹ️</span>
+                            <span class="nav-text">About Us</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin-charity/" class="nav-link" onclick="setActive(this)">
+                            <span class="nav-icon">❤️</span>
+                            <span class="nav-text">Charity</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="logout-section">
+                <a href="/admin-logout/" class="logout-link" onclick="confirmLogout(event)">
+                    <span class="nav-icon">🚪</span>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <div class="header-content">
+                    <h1>News Management</h1>
+                    <p>Manage and organize your KKMS news articles</p>
+                </div>
+                <button class="add-btn" data-bs-toggle="modal" data-bs-target="#addNewsModal">
+                    <span>➕</span> Add News
+                </button>
+            </div>
+            <div class="container mt-4">
+                <h2>Latest News</h2>
+                <table id="newsTable" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Title</th>
+                            <th>Content</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for news in news_list %}
+                        <tr>
+                            <td>
+                                {% if news.image %}
+                                <img src="{{ news.image.url }}" alt="{{ news.title }}" class="img-thumbnail"
+                                    style="width:60px; cursor:pointer;" data-bs-toggle="modal"
+                                    data-bs-target="#imageModal" data-src="{{ news.image.url }}">
+                                {% else %}
+                                No Image
+                                {% endif %}
+                            </td>
+                            <td>{{ news.title }}</td>
+                            <td>{{ news.content|truncatewords:20 }}</td>
+                            <td>
+                                {% if news.status == 1 %}
+                                <span class="badge bg-success">Active</span>
+                                {% else %}
+                                <span class="badge bg-secondary">Inactive</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-warning edit-btn" data-id="{{ news.id }}"
+                                    data-title="{{ news.title|escapejs }}" data-content="{{ news.content|escapejs }}"
+                                    data-status="{{ news.status }}"
+                                    data-image="{% if news.image %}{{ news.image.url }}{% endif %}">
+                                    Edit
+                                </a>
+                                <a href="{% url 'news_delete' news.id %}" class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Are you sure you want to delete this news?');">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+        <!-- Image Zoom Modal -->
+        <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-body p-0">
+                        <img id="modalImage" src="" class="img-fluid w-100">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add News Modal -->
+        <div class="modal fade" id="addNewsModal" tabindex="-1" aria-labelledby="addNewsLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form method="POST" enctype="multipart/form-data" action="{% url 'news_create' %}">
+                    {% csrf_token %}
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addNewsLabel">Add News</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Title</label>
+                                <input type="text" name="title" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Content</label>
+                                <textarea name="content" class="form-control" rows="4" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Status</label>
+                                <select name="status" class="form-select">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Image</label>
+                                <input type="file" name="image" class="form-control">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Save News</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit News Modal -->
+        <div class="modal fade" id="editNewsModal" tabindex="-1" aria-labelledby="editNewsLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form method="POST" enctype="multipart/form-data" id="editNewsForm" action="{% url 'news_update' %}">
+                    {% csrf_token %}
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editNewsLabel">Edit News</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="news_id" id="editNewsId">
+                            <div class="mb-3">
+                                <label class="form-label">Title</label>
+                                <input type="text" name="title" class="form-control" id="editTitle" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Content</label>
+                                <textarea name="content" class="form-control" id="editContent" rows="4" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Status</label>
+                                <select name="status" class="form-select" id="editStatus">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Image</label>
+                                <input type="file" name="image" class="form-control" id="editImage">
+                                <small id="currentImage"></small>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Update News</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleIcon = document.getElementById('toggle-icon');
+            sidebar.classList.toggle('collapsed');
+            toggleIcon.textContent = sidebar.classList.contains('collapsed') ? '›' : '‹';
+        }
+
+        function setActive(element) {
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        function confirmLogout(event) {
+            event.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = "{% url 'super_admin_logout' %}";
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const imageModal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            imageModal.addEventListener('show.bs.modal', function (event) {
+                const img = event.relatedTarget;
+                modalImage.src = img.getAttribute('data-src');
+            });
+
+            $('#newsTable').DataTable({
+                "pageLength": 5,
+                "lengthMenu": [5, 10, 25, 50],
+                "ordering": true
+            });
+
+            const editButtons = document.querySelectorAll('.edit-btn');
+            editButtons.forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const id = this.dataset.id;
+                    const title = this.dataset.title;
+                    const content = this.dataset.content;
+                    const status = this.dataset.status;
+                    const image = this.dataset.image;
+
+                    document.getElementById('editNewsId').value = id;
+                    document.getElementById('editTitle').value = title;
+                    document.getElementById('editContent').value = content;
+                    document.getElementById('editStatus').value = status;
+                    document.getElementById('currentImage').innerHTML = image ? `Current image: <img src="${image}" width="50">` : '';
+
+                    const editModal = new bootstrap.Modal(document.getElementById('editNewsModal'));
+                    editModal.show();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .dashboard-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #667eea;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .info-card h5 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f8f9fa;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .info-value {
+            color: #333;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+        }
+
+        .btn-logout {
+            background: #dc3545;
+            border: none;
+            border-radius: 25px;
+            padding: 8px 20px;
+            color: white;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            background: #c82333;
+            color: white;
+            text-decoration: none;
+        }
+
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-disapproved {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+
+        .btn-profile {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #5ca40c;
+            /* Primary blue background */
+            color: #fff;
+            /* White text */
+            text-decoration: none;
+            /* Remove underline */
+            border-radius: 25px;
+            /* Rounded corners */
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border: none;
+            /* Remove default border */
+            cursor: pointer;
+            /* Pointer cursor on hover */
+            margin-left: 0%;
+        }
+
+        /* Icon styling */
+        .btn-profile .fas {
+            margin-right: 8px;
+            /* Space between icon and text */
+            font-size: 18px;
+        }
+
+        /* Hover effect */
+        .btn-profile:hover {
+            background-color: #5ca40c;
+            /* Darker blue on hover */
+            transform: translateY(-2px);
+            /* Slight lift effect */
+        }
+
+        /* Active effect */
+        .btn-profile:active {
+            transform: translateY(0);
+            /* Reset lift on click */
+        }
+
+        /* Optional: Focus state for accessibility */
+        .btn-profile:focus {
+            outline: 2px solid #5ca40c;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+
+<body style="background: #f8f9fa;">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background: #343a40;">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-heart"></i> Matrimony Dashboard</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link btn-profile" href="{% url 'matching_profiles' %}"><i class="fas fa-user"></i> Matching Profiles</a>
+                <div class="logout-section">
+                <a href="#" class="logout-link" onclick="confirmLogout(event)">
+                    <span class="nav-icon">🚪</span>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1><i class="fas fa-tachometer-alt"></i> Welcome, {{ customer.user.get_full_name  }}!</h1>
+                    <p class="mb-0">Manage your matrimony profile and find your perfect match</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    {% if customer.profile_image %}
+                    <img src="{{ customer.profile_image.url }}" alt="Profile Image" class="profile-image">
+                    {% else %}
+                    <img src="https://via.placeholder.com/200" alt="No Image" class="img-fluid rounded">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Display messages -->
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <!-- Welcome Card -->
+        <div class="welcome-card">
+            <div class="row">
+                <div class="col-md-8">
+                    <h3>Account Status</h3>
+                    <p>Your account registration status and basic information</p>
+                    <div class="d-flex align-items-center">
+                        <span class="me-3"><strong>Status:</strong></span>
+                        {% if customer.status == 1 %}
+                        <span class="status-badge status-approved">Approved</span>
+                        {% elif customer.status == 0 %}
+                        <span class="status-badge status-pending">Pending Approval</span>
+                        {% else %}
+                        <span class="status-badge status-disapproved">Disapproved</span>
+                        {% endif %}
+                    </div>
+                    <div class="mt-3">
+                        <a href="{% url 'edit_profile' %}" class="btn btn-edit"><i class="fas fa-edit"></i> Edit Profile</a>
+                    </div>
+                </div>
+                <div class="col-md-4 text-end">
+                    <div class="text-muted">
+                        <small>Member since: {{ customer.created|date:"M d, Y" }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Basic Information -->
+            <div class="col-md-6">
+                <div class="info-card">
+                    <h5><i class="fas fa-user"></i> Basic Information</h5>
+                    <div class="info-item">
+                        <span class="info-label">Name:</span>
+                        <span class="info-value">{{ customer.user.first_name }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Email:</span>
+                        <span class="info-value">{{ customer.user.email }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Mobile:</span>
+                        <span class="info-value">{{ customer.contact_no }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Age:</span>
+                        <span class="info-value">{{ customer.age }} years</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Gender:</span>
+                        <span class="info-value">{{ customer.gender }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal Details -->
+            <div class="col-md-6">
+                <div class="info-card">
+                    <h5><i class="fas fa-heart"></i> Personal Details</h5>
+                    <div class="info-item">
+                        <span class="info-label">Date of Birth:</span>
+                        <span class="info-value">{{ customer.dob }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Birth Place:</span>
+                        <span class="info-value">{{ customer.place_birth }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Height:</span>
+                        <span class="info-value">{{ customer.height }} cm</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Weight:</span>
+                        <span class="info-value">{{ customer.weight }} kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Complexion:</span>
+                        <span class="info-value">{{ customer.complexion }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Details -->
+            <div class="col-md-6">
+                <div class="info-card">
+                    <h5><i class="fas fa-briefcase"></i> Professional Details</h5>
+                    <div class="info-item">
+                        <span class="info-label">Job:</span>
+                        <span class="info-value">{{ customer.job }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Company:</span>
+                        <span class="info-value">{{ customer.company }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Job City:</span>
+                        <span class="info-value">{{ customer.job_city }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Education:</span>
+                        <span class="info-value">{{ customer.education }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Monthly Income:</span>
+                        <span class="info-value">₹{{ customer.income }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Family Details -->
+            <div class="col-md-6">
+                <div class="info-card">
+                    <h5><i class="fas fa-home"></i> Family Details</h5>
+                    <div class="info-item">
+                        <span class="info-label">Father's Name:</span>
+                        <span class="info-value">{{ customer.father_name }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Mother's Name:</span>
+                        <span class="info-value">{{ customer.mother_name }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Brothers:</span>
+                        <span class="info-value">{{ customer.no_brothers }} married</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Sisters:</span>
+                        <span class="info-value">{{ customer.no_sisters }} married</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Caste:</span>
+                        <span class="info-value">{{ customer.caste }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Address Details -->
+            <div class="col-md-12">
+                <div class="info-card">
+                    <h5><i class="fas fa-map-marker-alt"></i> Address Details</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <span class="info-label">House Name:</span>
+                                <span class="info-value">{{ customer.house_name }}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Street:</span>
+                                <span class="info-value">{{ customer.street }}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Post:</span>
+                                <span class="info-value">{{ customer.post }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <span class="info-label">City:</span>
+                                <span class="info-value">{{ customer.city }}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">District:</span>
+                                <span class="info-value">{{ customer.district }}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Pin Code:</span>
+                                <span class="info-value">{{ customer.pin_code }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if customer.description %}
+            <!-- Expectations -->
+            <div class="col-md-12">
+                <div class="info-card">
+                    <h5><i class="fas fa-star"></i> Expectations</h5>
+                    <p class="mb-0">{{ customer.description }}</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function confirmLogout(event) {
+                    event.preventDefault(); // prevent default link behavior
+                    if (confirm('Are you sure you want to logout?')) {
+                        window.location.href = "{% url 'customer-login' %}";
+                    }
+                }
+    </script>
+</body>
+
+</html>

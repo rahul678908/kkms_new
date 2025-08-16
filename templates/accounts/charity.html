@@ -1,0 +1,322 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}{{ couple.groom_name|default:"Welcome to" }} & {{ couple.bride_name|default:"KERALA KAIKOLA/MUDALI SANGAM" }} - Charity{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% block description %}Explore our charity programs at {{ couple.groom_name|default:"Groom" }} and {{ couple.bride_name|default:"Bride" }}'s wedding{% endblock %}" />
+    <meta name="keywords" content="wedding, charity, donation, celebration" />
+    <meta name="author" content="{{ couple.groom_name|default:"Groom" }} & {{ couple.bride_name|default:"Bride" }}" />
+
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="{{ couple.groom_name|default:"Groom" }} & {{ couple.bride_name|default:"Bride" }} - Charity"/>
+    <meta property="og:image" content="{% static 'images/couple-main.jpg' %}"/>
+    <meta property="og:url" content="{{ request.build_absolute_uri }}"/>
+    <meta property="og:site_name" content="Wedding Invitation"/>
+    <meta property="og:description" content="Join us in supporting our charity initiatives"/>
+    <meta name="twitter:title" content="{{ couple.groom_name|default:"Groom" }} & {{ couple.bride_name|default:"Bride" }} - Charity" />
+    <meta name="twitter:image" content="{% static 'images/couple-main.jpg' %}" />
+    <meta name="twitter:url" content="{{ request.build_absolute_uri }}" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Sacramento" rel='stylesheet'>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Modernizr JS -->
+    <script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
+    <!-- IE9 Support -->
+    <!--[if lt IE 9]>
+    <script src="{% static 'js/respond.min.js' %}"></script>
+    <![endif]-->
+
+    {% block extra_css %}
+    <style>
+        /* Navigation flex layout */
+        .menu-1 ul {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: flex-end !important;
+            flex-wrap: wrap !important;
+        }
+        .menu-1 li {
+            display: inline-block !important;
+            margin-left: 15px !important;
+        }
+        .login-btn-nav {
+            margin-left: 20px !important;
+        }
+        .btn-login {
+            background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%) !important;
+            color: white !important;
+            padding: 8px 18px !important;
+            border-radius: 20px !important;
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 5px !important;
+            transition: all 0.3s ease !important;
+            border: none !important;
+            box-shadow: 0 3px 10px rgba(74, 144, 226, 0.3) !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            white-space: nowrap !important;
+        }
+        .btn-login:hover {
+            background: linear-gradient(135deg, #357ABD 0%, #2E6DA4 100%) !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4) !important;
+            color: white !important;
+            text-decoration: none !important;
+        }
+        .btn-login:focus, 
+        .btn-login:active {
+            color: white !important;
+            text-decoration: none !important;
+            outline: none !important;
+        }
+        .btn-login i {
+            font-size: 12px !important;
+        }
+        @media (max-width: 992px) {
+            .menu-1 ul {
+                flex-direction: column !important;
+                align-items: flex-end !important;
+            }
+            .login-btn-nav {
+                margin-left: 0 !important;
+                margin-top: 10px !important;
+            }
+        }
+        @media (max-width: 768px) {
+            .menu-1 ul {
+                display: block !important;
+            }
+            .menu-1 li {
+                display: block !important;
+                margin-left: 0 !important;
+                text-align: right !important;
+                margin-bottom: 5px !important;
+            }
+            .btn-login {
+                padding: 10px 20px !important;
+                font-size: 13px !important;
+                justify-content: center !important;
+                width: auto !important;
+                display: inline-block !important;
+            }
+        }
+        .fh5co-nav .menu-1 {
+            position: relative;
+        }
+        .fh5co-nav .menu-1 ul li {
+            position: relative;
+        }
+        .login-btn-nav a {
+            vertical-align: middle !important;
+        }
+        /* Charity Section Styling */
+        .section.pt-5.pb-5 {
+            padding: 50px 0;
+            background: #f8f9fa;
+        }
+        .card.h-100.shadow {
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .card.h-100.shadow:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .card-img-top {
+            object-fit: cover;
+            height: 250px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .card-body.text-center {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .card-title {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+        @media (max-width: 768px) {
+            .card-img-top {
+                height: 200px;
+            }
+            .card-title {
+                font-size: 18px;
+            }
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .fh5co-cover {
+            min-height: 400px;
+            background-size: cover !important;
+            background-position: center !important;
+        }
+        .fh5co-cover .overlay {
+            min-height: 400px;
+        }
+    </style>
+    {% endblock %}
+</head>
+<body>
+    <div class="fh5co-loader"></div>
+    <div id="page">
+        <!-- Navigation -->
+        <nav class="fh5co-nav" role="navigation">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-2">
+                        <div id="fh5co-logo">
+                            <a href="{% url 'home' %}">
+                                <img src="{% static 'images/logo.png' %}" alt="KKMS Logo" style="height: 40px;">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-10 text-right menu-1">
+                        <ul>
+                            <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                                <a href="/">Home</a>
+                            </li>
+                            <li class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                                <a href="/about/">About KKMS</a>
+                            </li>
+                            <li class="{% if request.resolver_match.url_name == 'charity' %}active{% endif %}">
+                                <a href="/charity/">Charity</a>
+                            </li>
+                            <li class="has-dropdown {% if request.resolver_match.url_name == 'privacy_policy' or request.resolver_match.url_name == 'terms' %}active{% endif %}">
+                                <a href="#">Policy</a>
+                                <ul class="dropdown">
+                                    <li><a href="/privacy-policy/">Privacy Policy</a></li>
+                                    <li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
+                                </ul>
+                            </li>
+                            <li class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+                                <a href="/contact/">Contact</a>
+                            </li>
+                            <li class="{% if request.resolver_match.url_name == 'register' %}active{% endif %}">
+                                <a href="/register-customer/">Matrimony Register</a>
+                            </li>
+                            <li class="login-btn-nav">
+                                <a href="/customer-login/" class="btn-login">
+                                    <i class="icon-user"></i> Login
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header -->
+        <header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image: url('{% static 'images/bride.jpg' %}');">
+            <div class="overlay" style="background-color: rgba(0,0,0,0.4);">
+                <div class="fh5co-container">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2 text-center">
+                            <div class="display-t">
+                                <div class="display-tc animate-box" data-animate-effect="fadeIn">
+                                    <h1>{% block header_title %}Our Charity Programs{% endblock %}</h1>
+                                    <h2>{% block header_subtitle %}Supporting Our Community{% endblock %}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Charity Section -->
+        <section class="section pt-5 pb-5">
+            <div class="container">
+                <h2 class="text-center mb-4">Our Charities</h2>
+                <div class="row">
+                    {% for charity in charities %}
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <div class="card h-100 shadow">
+                            {% if charity.image %}
+                            <img src="{{ charity.image.url }}" class="card-img-top" alt="{{ charity.title }}">
+                            {% else %}
+                            <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="No Image">
+                            {% endif %}
+                            <div class="card-body text-center">
+                                <h5 class="card-title">{{ charity.title }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12 text-center">
+                        <p>No charity entries available.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="fh5co-footer" role="contentinfo">
+            <div class="container">
+                <div class="row copyright">
+                    <div class="col-md-12 text-center">
+                        <p>
+                            <small class="block">© {% now "Y" %} {{ about.author|default:"KKMS Team" }}. All Rights Reserved.</small> 
+                            <small class="block">Designed and Developed by <a href="https://www.techfifoinnovations.com/" target="_blank">TechFIFO Innovations</a></small>
+                        </p>
+                        <p>
+                            <ul class="fh5co-social-icons">
+                                {% if couple.twitter_url %}<li><a href="{{ couple.twitter_url }}"><i class="icon-twitter"></i></a></li>{% endif %}
+                                {% if couple.facebook_url %}<li><a href="{{ couple.facebook_url }}"><i class="icon-facebook"></i></a></li>{% endif %}
+                                {% if couple.instagram_url %}<li><a href="{{ couple.instagram_url }}"><i class="icon-instagram"></i></a></li>{% endif %}
+                                {% if couple.linkedin_url %}<li><a href="{{ couple.linkedin_url }}"><i class="icon-linkedin"></i></a></li>{% endif %}
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div class="gototop js-top">
+        <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.countTo.js' %}"></script>
+    <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/magnific-popup-options.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
