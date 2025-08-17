@@ -1,0 +1,500 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>{% block title %}{{ couple.groom_name|default:"Welcome to" }} & {{ couple.bride_name|default:"KERALA KAIKOLA/MUDALI SANGAM" }} - Wedding{% endblock %}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="{% block description %}Wedding invitation for {{ couple.groom_name|default:"Groom" }} and {{ couple.bride_name|default:"Bride" }}{% endblock %}" />
+	<meta name="keywords" content="wedding, invitation, celebration, marriage" />
+	<meta name="author" content="{{ couple.groom_name|default:"Groom" }} & {{ couple.bride_name|default:"Bride" }}" />
+
+	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content="{{ couple.groom_name|default:"Groom" }} & {{ couple.bride_name|default:"Bride" }} - Wedding"/>
+	<meta property="og:image" content="{% static 'images/couple-main.jpg' %}"/>
+	<meta property="og:url" content="{{ request.build_absolute_uri }}"/>
+	<meta property="og:site_name" content="Wedding Invitation"/>
+	<meta property="og:description" content="Join us in celebrating our special day"/>
+	<meta name="twitter:title" content="{{ couple.groom_name|default:"Groom" }} & {{ couple.bride_name|default:"Bride" }} - Wedding" />
+	<meta name="twitter:image" content="{% static 'images/couple-main.jpg' %}" />
+	<meta name="twitter:url" content="{{ request.build_absolute_uri }}" />
+	<meta name="twitter:card" content="summary_large_image" />
+
+	<link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/css?family=Sacramento" rel="stylesheet">
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="{% static 'css/animate.css' %}">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+	<!-- Owl Carousel  -->
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<!-- Modernizr JS -->
+	<script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="{% static 'js/respond.min.js' %}"></script>
+	<![endif]-->
+
+	{% block extra_css %}
+	<style>
+		/* News Section Styling */
+		.fh5co-news {
+			padding: 60px 0;
+			background: #f8f9fa;
+		}
+		.fh5co-news .news-wrap {
+			margin-bottom: 30px;
+			padding: 20px;
+			background: #fff;
+			border-radius: 8px;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+			transition: all 0.3s ease;
+		}
+		.fh5co-news .news-wrap:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+		}
+		.fh5co-news .news-image {
+			width: 100%;
+			height: 200px;
+			object-fit: cover;
+			border-radius: 8px;
+			margin-bottom: 15px;
+		}
+		.fh5co-news .news-wrap h3 {
+			font-family: 'Work Sans', sans-serif;
+			font-size: 22px;
+			color: #333;
+			margin-bottom: 10px;
+			line-height: 1.3;
+		}
+		.fh5co-news .news-wrap p {
+			font-family: 'Work Sans', sans-serif;
+			color: #666;
+			font-size: 16px;
+			line-height: 1.6;
+			margin-bottom: 10px;
+		}
+		.fh5co-news .news-wrap .news-date {
+			color: #999;
+			font-size: 14px;
+			font-style: italic;
+		}
+		.fh5co-news .no-articles {
+			color: #666;
+			font-size: 18px;
+			text-align: center;
+			padding: 20px;
+		}
+		@media (max-width: 768px) {
+			.fh5co-news .news-wrap {
+				margin-bottom: 20px;
+			}
+			.fh5co-news .news-image {
+				height: 150px;
+			}
+		}
+		/* Navigation styling to match about-us.html */
+		.fh5co-nav .menu-1 ul {
+			display: flex !important;
+			align-items: center !important;
+			justify-content: flex-end !important;
+			flex-wrap: wrap !important;
+		}
+		.fh5co-nav .menu-1 li {
+			display: inline-block !important;
+			margin-left: 15px !important;
+		}
+		.login-btn-nav {
+			margin-left: 20px !important;
+		}
+		.btn-login {
+			background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%) !important;
+			color: white !important;
+			padding: 8px 18px !important;
+			border-radius: 20px !important;
+			font-size: 12px !important;
+			font-weight: 600 !important;
+			text-decoration: none !important;
+			display: inline-flex !important;
+			align-items: center !important;
+			gap: 5px !important;
+			transition: all 0.3s ease !important;
+			border: none !important;
+			box-shadow: 0 3px 10px rgba(74, 144, 226, 0.3) !important;
+			text-transform: uppercase !important;
+			letter-spacing: 0.5px !important;
+			white-space: nowrap !important;
+		}
+		.btn-login:hover {
+			background: linear-gradient(135deg, #357ABD 0%, #2E6DA4 100%) !important;
+			transform: translateY(-1px) !important;
+			box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4) !important;
+			color: white !important;
+			text-decoration: none !important;
+		}
+		.btn-login:focus, 
+		.btn-login:active {
+			color: white !important;
+			text-decoration: none !important;
+			outline: none !important;
+		}
+		.btn-login i {
+			font-size: 12px !important;
+		}
+		@media (max-width: 992px) {
+			.fh5co-nav .menu-1 ul {
+				flex-direction: column !important;
+				align-items: flex-end !important;
+			}
+			.login-btn-nav {
+				margin-left: 0 !important;
+				margin-top: 10px !important;
+			}
+		}
+		@media (max-width: 768px) {
+			.fh5co-nav .menu-1 ul {
+				display: block !important;
+			}
+			.fh5co-nav .menu-1 li {
+				display: block !important;
+				margin-left: 0 !important;
+				text-align: right !important;
+				margin-bottom: 5px !important;
+			}
+			.btn-login {
+				padding: 10px 20px !important;
+				font-size: 13px !important;
+				justify-content: center !important;
+				width: auto !important;
+				display: inline-block !important;
+			}
+		}
+		.fh5co-nav .menu-1 {
+			position: relative;
+		}
+		.fh5co-nav .menu-1 ul li {
+			position: relative;
+		}
+		.login-btn-nav a {
+			vertical-align: middle !important;
+		}
+		/* Updated Hero Section Styling */
+		.hero-section {
+			background-size: cover !important;
+			background-position: center !important;
+			background-repeat: no-repeat !important;
+			min-height: 100rem !important;
+			display: flex !important;
+			align-items: center !important;
+			justify-content: center !important;
+			position: relative !important;
+			width: 100% !important;
+			background-color: #f5f5f5; /* Fallback color */
+		}
+		.hero-section .container {
+			position: relative !important;
+			z-index: 2 !important;
+			text-align: center !important;
+			max-width: 800px !important;
+			padding: 20px !important;
+		}
+		.hero-section::before {
+			content: "" !important;
+			position: absolute !important;
+			top: 0 !important;
+			left: 0 !important;
+			width: 100% !important;
+			height: 100% !important;
+			background: rgba(0, 0, 0, 0.5) !important; /* Darker overlay for better text readability */
+			z-index: 1 !important;
+		}
+		.hero-section h1 {
+			font-family: 'Sacramento', cursive;
+			font-size: 48px;
+			color: #fff;
+			margin-bottom: 15px;
+			line-height: 1.2;
+			text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+		}
+		.hero-section p.lead {
+			font-family: 'Work Sans', sans-serif;
+			font-size: 24px;
+			color: #fff;
+			margin-bottom: 10px;
+			text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+		}
+		.hero-section p {
+			font-family: 'Work Sans', sans-serif;
+			font-size: 18px;
+			color: #fff;
+			text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+		}
+		@media (max-width: 768px) {
+			.hero-section {
+				min-height: 350px !important;
+			}
+			.hero-section h1 {
+				font-size: 36px;
+			}
+			.hero-section p.lead {
+				font-size: 20px;
+			}
+			.hero-section p {
+				font-size: 16px;
+			}
+		}
+	</style>
+	{% endblock %}
+	</head>
+	<body>
+		<nav class="fh5co-nav" role="navigation">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-2">
+						<div id="fh5co-logo">
+							<a href="{% url 'home' %}">
+								<img src="{% static 'images/logo.png' %}" alt="KKMS Logo" style="height: 40px;">
+							</a>
+						</div>
+					</div>
+					<div class="col-xs-10 text-right menu-1">
+						<ul>
+							<li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+								<a class="nav-link" href="/">Home</a>
+							</li>
+							<li class="nav-item {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+								<a class="nav-link" href="/about/">About KKMS</a>
+							</li>
+							<li class="nav-item {% if request.resolver_match.url_name == 'charity' %}active{% endif %}">
+								<a class="nav-link" href="/charity/">Charity</a>
+							</li>
+							<li class="nav-item dropdown {% if request.resolver_match.url_name == 'privacy_policy' or request.resolver_match.url_name == 'terms' %}active{% endif %}">
+								<a class="nav-link dropdown-toggle" href="#" id="policyDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									Policy
+								</a>
+								{% comment %} <ul class="dropdown-menu" aria-labelledby="policyDropdown">
+									<li><a class="dropdown-item" href="/privacy-policy/">Privacy Policy</a></li>
+									<li><a class="dropdown-item" href="/terms-and-conditions/">Terms & Conditions</a></li>
+								</ul> {% endcomment %}
+							</li>
+							<li class="nav-item {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+								<a class="nav-link" href="/contact/">Contact</a>
+							</li>
+							<li class="nav-item {% if request.resolver_match.url_name == 'register' %}active{% endif %}">
+								<a class="nav-link" href="/register-customer/">Matrimony Register</a>
+							</li>
+							<li class="nav-item login-btn-nav">
+								<a href="/customer-login/" class="btn-login">
+									<i class="icon-user"></i> Login
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</nav>
+		
+		<!-- Hero/Banner Section with full coverage -->
+		<section class="hero-section" style="background-image: url('{{ banner.banner_image.url }}');">
+			<div class="container text-white">
+				<h1>{{ banner.banner_text1 }}</h1>
+				<p class="lead">{{ banner.banner_text2 }}</p>
+				<p>{{ banner.banner_text3 }}</p>
+			</div>
+		</section>
+
+		<div id="fh5co-event" class="fh5co-bg" style="background-image:url({% static 'images/img_bg_3.jpg' %});">
+			<div class="overlay"></div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2 text-center fh5co-heading animate-box">
+						<span>Our Special Events</span>
+						<h2>Wedding Events</h2>
+					</div>
+				</div>
+				<div class="row">
+					<div class="display-t">
+						<div class="display-tc">
+							<div class="col-md-10 col-md-offset-1">
+								{% for event in wedding_events %}
+								<div class="col-md-6 col-sm-6 text-center">
+									<div class="event-wrap animate-box">
+										<h3>{{ event.name }}</h3>
+										<div class="event-col">
+											<i class="icon-clock"></i>
+											<span>{{ event.start_time|time:"g:i A" }}</span>
+											<span>{{ event.end_time|time:"g:i A" }}</span>
+										</div>
+										<div class="event-col">
+											<i class="icon-calendar"></i>
+											<span>{{ event.date|date:"l j" }}</span>
+											<span>{{ event.date|date:"F, Y" }}</span>
+										</div>
+										<p>{{ event.description }}</p>
+									</div>
+								</div>
+								{% empty %}
+								<div class="col-md-6 col-sm-6 text-center">
+									<div class="event-wrap animate-box">
+										<h3>Main Ceremony</h3>
+										<div class="event-col">
+											<i class="icon-clock"></i>
+											<span>4:00 PM</span>
+											<span>6:00 PM</span>
+										</div>
+										<div class="event-col">
+											<i class="icon-calendar"></i>
+											<span>{{ wedding_date|date:"l j" }}</span>
+											<span>{{ wedding_date|date:"F, Y" }}</span>
+										</div>
+										<p>Join us for our wedding ceremony where we exchange vows and begin our journey together as husband and wife.</p>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6 text-center">
+									<div class="event-wrap animate-box">
+										<h3>Wedding Reception</h3>
+										<div class="event-col">
+											<i class="icon-clock"></i>
+											<span>7:00 PM</span>
+											<span>12:00 AM</span>
+										</div>
+										<div class="event-col">
+											<i class="icon-calendar"></i>
+											<span>{{ wedding_date|date:"l j" }}</span>
+											<span>{{ wedding_date|date:"F, Y" }}</span>
+										</div>
+										<p>Celebrate with us at our reception with dinner, dancing, and festivities to honor our special day.</p>
+									</div>
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="fh5co-news" class="fh5co-section-gray">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2 text-center fh5co-heading animate-box">
+						<span>Latest Updates</span>
+						<h2>News & Announcements</h2>
+						<p>Stay updated with the latest news from KERALA KAIKOLA/MUDALI SANGAM</p>
+					</div>
+				</div>
+				<div class="row row-bottom-padded-md">
+					<div class="col-md-12">
+						<div class="row">
+							{% for news in news_articles %}
+							<div class="col-md-4 col-sm-6 news-wrap animate-box" data-animate-effect="fadeIn">
+								{% if news.image %}
+								<img class="news-image img-responsive" src="/media/{{ news.image }}" alt="{{ news.title|escape }}">
+								{% else %}
+								<img class="news-image img-responsive" src="{% static 'images/placeholder.jpg' %}" alt="No Image">
+								{% endif %}
+								<h3>{{ news.title }}</h3>
+								<p>{{ news.content|truncatewords:30 }}</p>
+								<p class="news-date">{{ news.created_date|date:"M d, Y" }}</p>
+							</div>
+							{% empty %}
+							<div class="col-md-12 no-articles animate-box" data-animate-effect="fadeIn">
+								<p>No news articles available.</p>
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<footer id="fh5co-footer" role="contentinfo">
+			<div class="container">
+				<div class="row copyright">
+					<div class="col-md-12 text-center">
+						<p>
+							<small class="block">© {% now "Y" %} {{ about.author|default:"KKMS Team" }}. All Rights Reserved.</small> 
+							<small class="block">Designed and Developed by <a href="https://www.techfifoinnovations.com/" target="_blank">TechFIFO Innovations</a></small>
+						</p>
+						<p>
+							<ul class="fh5co-social-icons">
+								{% if social_links.twitter %}<li><a href="{{ social_links.twitter }}"><i class="icon-twitter"></i></a></li>{% endif %}
+								{% if social_links.facebook %}<li><a href="{{ social_links.facebook }}"><i class="icon-facebook"></i></a></li>{% endif %}
+								{% if social_links.instagram %}<li><a href="{{ social_links.instagram }}"><i class="icon-instagram"></i></a></li>{% endif %}
+								{% if social_links.linkedin %}<li><a href="{{ social_links.linkedin }}"><i class="icon-linkedin"></i></a></li>{% endif %}
+							</ul>
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+		</div>
+
+		<div class="gototop js-top">
+			<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+		</div>
+		
+		<!-- jQuery -->
+		<script src="{% static 'js/jquery.min.js' %}"></script>
+		<!-- jQuery Easing -->
+		<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+		<!-- Bootstrap -->
+		<script src="{% static 'js/bootstrap.min.js' %}"></script>
+		<!-- Waypoints -->
+		<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+		<!-- Carousel -->
+		<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+		<!-- countTo -->
+		<script src="{% static 'js/jquery.countTo.js' %}"></script>
+		<!-- Stellar -->
+		<script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+		<!-- Magnific Popup -->
+		<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+		<script src="{% static 'js/magnific-popup-options.js' %}"></script>
+		<script src="{% static 'js/simplyCountdown.js' %}"></script>
+		<!-- Main -->
+		<script src="{% static 'js/main.js' %}"></script>
+
+		<script>
+			{% if wedding_date %}
+			var weddingDate = new Date('{{ wedding_date|date:"Y-m-d" }}T00:00:00Z');
+			simplyCountdown('.simply-countdown-one', {
+				year: weddingDate.getFullYear(),
+				month: weddingDate.getMonth() + 1,
+				day: weddingDate.getDate(),
+				hours: weddingDate.getHours(),
+				minutes: weddingDate.getMinutes(),
+				seconds: weddingDate.getSeconds()
+			});
+			{% endif %}
+			$(document).ready(function() {
+				$('.owl-carousel-fullwidth').owlCarousel({
+					animateOut: 'fadeOut',
+					animateIn: 'fadeIn',
+					items: 1,
+					loop: true,
+					margin: 10,
+					nav: true,
+					dots: true,
+					autoplay: true,
+					autoplayTimeout: 5000,
+					autoplayHoverPause: true
+				});
+				$('.js-counter').countTo();
+			});
+		</script>
+		{% block extra_js %}{% endblock %}
+	</body>
+</html>

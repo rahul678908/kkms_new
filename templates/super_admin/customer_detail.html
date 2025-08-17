@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .profile-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h5 {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-img-top {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 4px solid #667eea;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: #555;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        p strong {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .btn-primary, .btn-warning, .btn-secondary {
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-right: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5a6dd8 0%, #6b4294 100%);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f6c23e 0%, #e0a800 100%);
+            border: none;
+            color: #fff;
+        }
+
+        .btn-warning:hover {
+            background: linear-gradient(135deg, #e4b12f 0%, #c69500 100%);
+            transform: translateY(-2px);
+        }
+
+        .btn-warning:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5c636a;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:active {
+            transform: translateY(0);
+        }
+
+        /* Modal Styles */
+        .modal.fade {
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 10% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: none;
+            max-width: 600px;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            padding: 1rem 2rem;
+            border-bottom: none;
+        }
+
+        .modal-title {
+            font-weight: 600;
+        }
+
+        .btn-close {
+            filter: invert(1);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-footer {
+            border-top: none;
+            padding: 1rem 2rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 1px solid #ced4da;
+            padding: 0.75rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
+            outline: none;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .profile-image-preview {
+            max-width: 200px;
+            border-radius: 10px;
+            border: 4px solid #667eea;
+            margin-bottom: 1rem;
+            object-fit: cover;
+        }
+
+        /* Custom Modal for Edit Profile */
+        #editModal {
+            background-color: rgba(0, 0, 0, 0.4);
+            position: fixed;
+            z-index: 1050;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+        }
+
+        #editModal .modal-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        #editModal .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            cursor: pointer;
+        }
+
+        #editModal .close:hover,
+        #editModal .close:focus {
+            color: #333;
+        }
+
+        #editModal h2 {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="profile-container">
+        <div class="row">
+            <div class="col-md-6">
+                {% if customer.profile_image %}
+                <img src="{{ customer.profile_image.url }}" class="card-img-top" alt="{{ customer.user.get_full_name }}">
+                {% else %}
+                <p>No profile image available.</p>
+                {% endif %}
+                <h5><i class="fas fa-user me-2"></i>{{ customer.user.first_name }} {{ customer.user.last_name }}</h5>
+                <p><strong>Age:</strong> {{ customer.age }}</p>
+                <p><strong>Gender:</strong> {{ customer.gender }}</p>
+                <p><strong>Mobile:</strong> {{ customer.contact_no }}</p>
+                <p><strong>Caste:</strong> {{ customer.caste }}</p>
+                <p><strong>Job:</strong> {{ customer.job }}</p>
+                <p><strong>Marital Status:</strong> {{ customer.marital_status }}</p>
+                <p><strong>District:</strong> {{ customer.district }}</p>
+                <p><strong>Job Department:</strong> {{ customer.job_department }}</p>
+                <p><strong>Company:</strong> {{ customer.company }}</p>
+                <p><strong>Physical Condition:</strong> {{ customer.physical_condition }}</p>
+                <p><strong>Birth Time:</strong> {{ customer.time_birth }}</p>
+                <p><strong>Birth Place:</strong> {{ customer.place_birth }}</p>
+                <p><strong>Date of Birth:</strong> {{ customer.dob }}</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Height:</strong> {{ customer.height }}</p>
+                <p><strong>Weight:</strong> {{ customer.weight }}</p>
+                <p><strong>Complexion:</strong> {{ customer.complexion }}</p>
+                <p><strong>Education:</strong> {{ customer.education }}</p>
+                <p><strong>Father's Name:</strong> {{ customer.father_name }}</p>
+                <p><strong>Mother's Name:</strong> {{ customer.mother_name }}</p>
+                <p><strong>Address:</strong> {{ customer.address }}</p>
+                <p><strong>Star:</strong> {{ customer.star }}</p>
+                <p><strong>Married Sisters:</strong> {{ customer.married_sisters }}</p>
+                <p><strong>Married Brothers:</strong> {{ customer.married_brothers }}</p>
+                <p><strong>Father's Job:</strong> {{ customer.father_job }}</p>
+                <p><strong>Mother's Job:</strong> {{ customer.mother_job }}</p>
+                <p><strong>Income:</strong> {{ customer.income }}</p>
+                <p><strong>Job City:</strong> {{ customer.job_city }}</p>
+                <p><strong>City:</strong> {{ customer.city }}</p>
+                <p><strong>Post:</strong> {{ customer.post }}</p>
+                <p><strong>Pin Code:</strong> {{ customer.pin_code }}</p>
+                <p><strong>Street:</strong> {{ customer.street }}</p>
+                <p><strong>House Name:</strong> {{ customer.house_name }}</p>
+                <button id="editBtn" class="btn btn-primary mt-3"><i class="fas fa-edit me-2"></i>Edit Profile</button>
+                <button id="changePasswordBtn" class="btn btn-warning mt-3" data-customer="{{ customer.id }}">
+                    <i class="fas fa-key me-2"></i>Change Password
+                </button>
+                <button id="paymentBtn" class="btn btn-primary mt-3" data-customer="{{ customer.id }}">
+                    <i class="fas fa-credit-card me-2"></i>Payment
+                </button>
+            </div>
+        </div>
+
+        <!-- Change Password Modal -->
+        <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" id="changePasswordModalContent">
+                    <!-- Content loaded by AJAX -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Modal -->
+        <div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i class="fas fa-credit-card me-2"></i>Payments</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="paymentModalBody">
+                        <!-- AJAX loads payment_modal.html here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Profile Modal -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2><i class="fas fa-edit me-2"></i>Edit Profile</h2>
+                <form method="post" id="editProfileForm" enctype="multipart/form-data" action="{% url 'customer_edit' customer.id %}">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="first_name" class="form-label"><i class="fas fa-user me-2"></i>First Name</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" value="{{ customer.user.first_name }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="last_name" class="form-label"><i class="fas fa-user me-2"></i>Last Name</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" value="{{ customer.user.last_name }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label"><i class="fas fa-envelope me-2"></i>Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ customer.user.email }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="contact_no" class="form-label"><i class="fas fa-phone me-2"></i>Mobile</label>
+                            <input type="text" class="form-control" id="contact_no" name="contact_no" value="{{ customer.contact_no }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="age" class="form-label"><i class="fas fa-calendar me-2"></i>Age</label>
+                            <input type="number" class="form-control" id="age" name="age" value="{{ customer.age }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="gender" class="form-label"><i class="fas fa-venus-mars me-2"></i>Gender</label>
+                            <select class="form-control form-select" id="gender" name="gender">
+                                <option value="Male" {% if customer.gender == 'Male' %}selected{% endif %}>Male</option>
+                                <option value="Female" {% if customer.gender == 'Female' %}selected{% endif %}>Female</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label"><i class="fas fa-image me-2"></i>Current Profile Image</label>
+                            {% if customer.profile_image %}
+                            <img src="{{ customer.profile_image.url }}" alt="Current Profile Image" class="profile-image-preview">
+                            {% else %}
+                            <p>No profile image uploaded.</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="profile_image" class="form-label"><i class="fas fa-upload me-2"></i>Upload New Image</label>
+                            <input type="file" class="form-control" id="profile_image" name="profile_image">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="father_name" class="form-label"><i class="fas fa-user me-2"></i>Father's Name</label>
+                            <input type="text" class="form-control" id="father_name" name="father_name" value="{{ customer.father_name }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="mother_name" class="form-label"><i class="fas fa-user me-2"></i>Mother's Name</label>
+                            <input type="text" class="form-control" id="mother_name" name="mother_name" value="{{ customer.mother_name }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="father_job" class="form-label"><i class="fas fa-briefcase me-2"></i>Father's Job</label>
+                            <input type="text" class="form-control" id="father_job" name="father_job" value="{{ customer.father_job }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="mother_job" class="form-label"><i class="fas fa-briefcase me-2"></i>Mother's Job</label>
+                            <input type="text" class="form-control" id="mother_job" name="mother_job" value="{{ customer.mother_job }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="married_sisters" class="form-label"><i class="fas fa-users me-2"></i>Married Sisters</label>
+                            <input type="text" class="form-control" id="married_sisters" name="married_sisters" value="{{ customer.married_sisters }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="married_brothers" class="form-label"><i class="fas fa-users me-2"></i>Married Brothers</label>
+                            <input type="text" class="form-control" id="married_brothers" name="married_brothers" value="{{ customer.married_brothers }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="caste" class="form-label"><i class="fas fa-users me-2"></i>Caste</label>
+                            <select class="form-control form-select" id="caste" name="caste">
+                                <option value="">Select Caste</option>
+                                {% for key, value in customer.CASTE_CHOICES %}
+                                <option value="{{ key }}" {% if customer.caste == key %}selected{% endif %}>{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="marital_status" class="form-label"><i class="fas fa-ring me-2"></i>Marital Status</label>
+                            <select class="form-control form-select" id="marital_status" name="marital_status">
+                                <option value="">Select Status</option>
+                                {% for key, value in customer.MARITAL_STATUS_CHOICES %}
+                                <option value="{{ key }}" {% if customer.marital_status == key %}selected{% endif %}>{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="star" class="form-label"><i class="fas fa-star me-2"></i>Star</label>
+                            <select class="form-control form-select" id="star" name="star">
+                                <option value="">Select Star</option>
+                                {% for key, value in customer.STAR_CHOICES %}
+                                <option value="{{ key }}" {% if customer.star == key %}selected{% endif %}>{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="dosham" class="form-label"><i class="fas fa-asterisk me-2"></i>Dosham</label>
+                            <input type="text" class="form-control" id="dosham" name="dosham" value="{{ customer.dosham }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="dob" class="form-label"><i class="fas fa-calendar me-2"></i>Date of Birth</label>
+                            <input type="text" class="form-control" id="dob" name="dob" value="{{ customer.dob }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="time_birth" class="form-label"><i class="fas fa-clock me-2"></i>Time of Birth</label>
+                            <input type="text" class="form-control" id="time_birth" name="time_birth" value="{{ customer.time_birth }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="place_birth" class="form-label"><i class="fas fa-map-marker-alt me-2"></i>Place of Birth</label>
+                            <input type="text" class="form-control" id="place_birth" name="place_birth" value="{{ customer.place_birth }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="height" class="form-label"><i class="fas fa-ruler-vertical me-2"></i>Height</label>
+                            <input type="text" class="form-control" id="height" name="height" value="{{ customer.height }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="weight" class="form-label"><i class="fas fa-weight me-2"></i>Weight</label>
+                            <input type="text" class="form-control" id="weight" name="weight" value="{{ customer.weight }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="complexion" class="form-label"><i class="fas fa-paint-brush me-2"></i>Complexion</label>
+                            <input type="text" class="form-control" id="complexion" name="complexion" value="{{ customer.complexion }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="physical_condition" class="form-label"><i class="fas fa-heartbeat me-2"></i>Physical Condition</label>
+                            <input type="text" class="form-control" id="physical_condition" name="physical_condition" value="{{ customer.physical_condition }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="education" class="form-label"><i class="fas fa-graduation-cap me-2"></i>Education</label>
+                            <input type="text" class="form-control" id="education" name="education" value="{{ customer.education }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="job" class="form-label"><i class="fas fa-briefcase me-2"></i>Job</label>
+                            <input type="text" class="form-control" id="job" name="job" value="{{ customer.job }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="company" class="form-label"><i class="fas fa-building me-2"></i>Company</label>
+                            <input type="text" class="form-control" id="company" name="company" value="{{ customer.company }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="job_department" class="form-label"><i class="fas fa-sitemap me-2"></i>Job Department</label>
+                            <input type="text" class="form-control" id="job_department" name="job_department" value="{{ customer.job_department }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="job_city" class="form-label"><i class="fas fa-city me-2"></i>Job City</label>
+                            <input type="text" class="form-control" id="job_city" name="job_city" value="{{ customer.job_city }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="income" class="form-label"><i class="fas fa-money-bill-wave me-2"></i>Income</label>
+                            <input type="text" class="form-control" id="income" name="income" value="{{ customer.income }}">
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <h5><i class="fas fa-map-marker-alt me-2"></i>Address Details</h5>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="address" class="form-label"><i class="fas fa-home me-2"></i>Full Address</label>
+                            <textarea class="form-control" id="address" name="address">{{ customer.address }}</textarea>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="house_name" class="form-label"><i class="fas fa-home me-2"></i>House Name</label>
+                            <input type="text" class="form-control" id="house_name" name="house_name" value="{{ customer.house_name }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="street" class="form-label"><i class="fas fa-road me-2"></i>Street</label>
+                            <input type="text" class="form-control" id="street" name="street" value="{{ customer.street }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="city" class="form-label"><i class="fas fa-city me-2"></i>City</label>
+                            <input type="text" class="form-control" id="city" name="city" value="{{ customer.city }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="district" class="form-label"><i class="fas fa-map me-2"></i>District</label>
+                            <input type="text" class="form-control" id="district" name="district" value="{{ customer.district }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="post" class="form-label"><i class="fas fa-mail-bulk me-2"></i>Post</label>
+                            <input type="text" class="form-control" id="post" name="post" value="{{ customer.post }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="pin_code" class="form-label"><i class="fas fa-map-pin me-2"></i>Pin Code</label>
+                            <input type="text" class="form-control" id="pin_code" name="pin_code" value="{{ customer.pin_code }}">
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="description" class="form-label"><i class="fas fa-comment me-2"></i>Description</label>
+                            <textarea class="form-control" id="description" name="description">{{ customer.description }}</textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save Changes</button>
+                    <a href="{% url 'customer_dashboard' %}" class="btn btn-secondary"><i class="fas fa-times me-2"></i>Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById("changePasswordBtn").addEventListener("click", function() {
+            let customerId = this.getAttribute("data-customer");
+            fetch(`/customers/${customerId}/change-password/modal/`)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById("changePasswordModalContent").innerHTML = html;
+                    let modal = new bootstrap.Modal(document.getElementById("changePasswordModal"));
+                    modal.show();
+                });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const paymentBtn = document.getElementById("paymentBtn");
+            paymentBtn.addEventListener("click", function () {
+                const customerId = this.getAttribute("data-customer");
+                fetch(`/customers/${customerId}/payments/modal/`)
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById("paymentModalBody").innerHTML = html;
+                        let modal = new bootstrap.Modal(document.getElementById("paymentModal"));
+                        modal.show();
+                    });
+            });
+
+            const modal = document.getElementById("editModal");
+            const btn = document.getElementById("editBtn");
+            const span = document.getElementsByClassName("close")[0];
+
+            btn.onclick = function () {
+                modal.style.display = "block";
+            };
+
+            span.onclick = function () {
+                modal.style.display = "none";
+            };
+
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            };
+        });
+    </script>
+</body>
+
+</html>
