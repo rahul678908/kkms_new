@@ -50,6 +50,7 @@ urlpatterns = [
     path('matching-profiles/', views.matching_profiles, name='matching_profiles'),
     path('send-interest/', views.send_interest, name='send_interest'),
     path('edit-profile/', views.edit_profile, name='edit_profile'),
+    path("import-customers/", views.import_customers, name="import-customers"),
    
 ]
 

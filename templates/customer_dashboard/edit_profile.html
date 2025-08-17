@@ -9,48 +9,159 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .container {
             max-width: 1200px;
         }
 
-        .form-container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            margin-top: 2rem;
+        /* Enhanced Navbar */
+        .custom-navbar {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+            padding: 1rem 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
             margin-bottom: 2rem;
         }
 
-        h2 {
-            color: #667eea;
+        .navbar-brand {
+            color: #fff !important;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
             font-weight: bold;
+        }
+
+        .navbar-brand i {
+            margin-right: 10px;
+            color: #e74c3c;
+        }
+
+        /* Beautiful Dashboard Button */
+        .btn-dashboard {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-dashboard::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-dashboard:hover::before {
+            left: 100%;
+        }
+
+        .btn-dashboard:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .btn-dashboard i {
+            margin-right: 8px;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .page-title {
+            color: #2c3e50;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 2rem;
+            position: relative;
+        }
+
+        .page-title i {
+            color: #667eea;
+            margin-right: 10px;
+        }
+
+        .section-title {
+            color: #667eea;
+            font-weight: 600;
+            margin-top: 2.5rem;
             margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f8f9fa;
+            font-size: 1.3rem;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+            color: #e74c3c;
         }
 
         .form-label {
             font-weight: 600;
             color: #555;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
         }
 
         .form-control, .form-select {
-            border-radius: 10px;
-            border: 1px solid #ced4da;
-            padding: 0.75rem;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 12px;
+            border: 2px solid #e9ecef;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            background-color: #fdfdfd;
         }
 
         .form-control:focus, .form-select:focus {
             border-color: #667eea;
-            box-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
             outline: none;
+            background-color: #fff;
+            transform: translateY(-1px);
         }
 
         .form-control::placeholder {
-            color: #999;
+            color: #adb5bd;
+            font-style: italic;
         }
 
         textarea.form-control {
@@ -58,258 +169,730 @@
             min-height: 100px;
         }
 
-        .btn-primary, .btn-secondary {
+        /* Enhanced Button Styling */
+        .btn-primary, .btn-secondary, .btn-success {
             border-radius: 25px;
-            padding: 10px 20px;
+            padding: 12px 30px;
             font-size: 16px;
-            font-weight: 500;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            position: relative;
+            overflow: hidden;
         }
 
         .btn-primary {
-            background-color: #667eea;
-            border: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
 
         .btn-primary:hover {
-            background-color: #5a6dd8;
+            background: linear-gradient(135deg, #5a6dd8 0%, #6a4c93 100%);
             transform: translateY(-2px);
-        }
-
-        .btn-primary:active {
-            transform: translateY(0);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
         }
 
         .btn-secondary {
-            background-color: #6c757d;
-            border: none;
+            background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
         }
 
         .btn-secondary:hover {
-            background-color: #5c636a;
+            background: linear-gradient(135deg, #5a6268 0%, #6c757d 100%);
             transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
         }
 
-        .btn-secondary:active {
-            transform: translateY(0);
+        .btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #20c997 0%, #28a745 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        /* Profile Image Styling */
+        .profile-image-container {
+            text-align: center;
+            margin-bottom: 2rem;
         }
 
         .profile-image-preview {
             max-width: 200px;
-            border-radius: 10px;
+            max-height: 200px;
+            border-radius: 15px;
             border: 4px solid #667eea;
             margin-bottom: 1rem;
             object-fit: cover;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
         }
 
-        .mb-3 {
-            margin-bottom: 1.5rem !important;
+        .profile-image-preview:hover {
+            transform: scale(1.05);
         }
 
-        h5 {
-            color: #667eea;
-            font-weight: bold;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input-custom {
+            position: relative;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px dashed #667eea;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-input-custom:hover {
+            background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
+            border-color: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .file-input-custom input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .form-row-spacing {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Enhanced Form Sections */
+        .form-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid #667eea;
+        }
+
+        /* Button Container */
+        .button-container {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #f8f9fa;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 1.5rem;
+                margin: 1rem;
+                border-radius: 15px;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.1rem;
+                margin-top: 2rem;
+            }
+
+            .btn-primary, .btn-secondary, .btn-success {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+
+            .profile-image-preview {
+                max-width: 150px;
+                max-height: 150px;
+            }
+
+            .custom-navbar {
+                padding: 0.5rem 0;
+            }
+
+            .navbar-brand {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 10px;
+            }
+
+            .form-container {
+                margin: 0.5rem;
+                padding: 1rem;
+            }
+
+            .page-title {
+                font-size: 1.3rem;
+            }
+
+            .btn-primary, .btn-secondary, .btn-success {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+
+        /* Loading Animation */
+        .form-control.loading {
+            background-image: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Success Message Styling */
+        .alert {
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+        }
+
+        .alert-danger {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
         }
     </style>
 </head>
 
 <body>
-    <div class="container mt-5">
+    <!-- Enhanced Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-heart"></i> Matrimony Profile</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link btn-dashboard" href="{% url 'customer_dashboard' %}">
+                    <i class="fas fa-tachometer-alt"></i> Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Display messages -->
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <i class="fas fa-info-circle"></i> {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+
         <div class="form-container">
-            <h2><i class="fas fa-edit"></i> Edit Profile</h2>
-            <form method="post" enctype="multipart/form-data">
+            <h2 class="page-title"><i class="fas fa-user-edit"></i> Edit Your Profile</h2>
+            
+            <form method="post" enctype="multipart/form-data" id="profileForm">
                 {% csrf_token %}
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="first_name" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="last_name" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="contact_no" class="form-label">Mobile</label>
-                        <input type="text" class="form-control" id="contact_no" name="contact_no" value="{{ customer_profile.contact_no }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="age" class="form-label">Age</label>
-                        <input type="number" class="form-control" id="age" name="age" value="{{ customer_profile.age }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="gender" class="form-label">Gender</label>
-                        <select class="form-control form-select" id="gender" name="gender">
-                            <option value="Male" {% if customer_profile.gender == 'Male' %}selected{% endif %}>Male</option>
-                            <option value="Female" {% if customer_profile.gender == 'Female' %}selected{% endif %}>Female</option>
-                        </select>
-                    </div>
-                    <div class="col-md-12 mb-3">
-                        <label class="form-label">Current Profile Image</label>
-                        {% if customer_profile.profile_image %}
-                            <img src="{{ customer_profile.profile_image.url }}" alt="Current Profile Image" class="profile-image-preview">
-                        {% else %}
-                            <p>No profile image uploaded.</p>
-                        {% endif %}
-                    </div>
-                    <div class="col-md-12 mb-3">
-                        <label for="profile_image" class="form-label">Upload New Image</label>
-                        <input type="file" class="form-control" id="profile_image" name="profile_image">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="father_name" class="form-label">Father's Name</label>
-                        <input type="text" class="form-control" id="father_name" name="father_name" value="{{ customer_profile.father_name }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="mother_name" class="form-label">Mother's Name</label>
-                        <input type="text" class="form-control" id="mother_name" name="mother_name" value="{{ customer_profile.mother_name }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="father_job" class="form-label">Father's Job</label>
-                        <input type="text" class="form-control" id="father_job" name="father_job" value="{{ customer_profile.father_job }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="mother_job" class="form-label">Mother's Job</label>
-                        <input type="text" class="form-control" id="mother_job" name="mother_job" value="{{ customer_profile.mother_job }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="married_sisters" class="form-label">Married Sisters</label>
-                        <input type="text" class="form-control" id="married_sisters" name="married_sisters" value="{{ customer_profile.married_sisters }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="married_brothers" class="form-label">Married Brothers</label>
-                        <input type="text" class="form-control" id="married_brothers" name="married_brothers" value="{{ customer_profile.married_brothers }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="caste" class="form-label">Caste</label>
-                        <select class="form-control form-select" id="caste" name="caste">
-                            <option value="">Select Caste</option>
-                            {% for key, value in customer_profile.CASTE_CHOICES %}
-                                <option value="{{ key }}" {% if customer_profile.caste == key %}selected{% endif %}>{{ value }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="marital_status" class="form-label">Marital Status</label>
-                        <select class="form-control form-select" id="marital_status" name="marital_status">
-                            <option value="">Select Status</option>
-                            {% for key, value in customer_profile.MARITAL_STATUS_CHOICES %}
-                                <option value="{{ key }}" {% if customer_profile.marital_status == key %}selected{% endif %}>{{ value }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="star" class="form-label">Star</label>
-                        <select class="form-control form-select" id="star" name="star">
-                            <option value="">Select Star</option>
-                            {% for key, value in customer_profile.STAR_CHOICES %}
-                                <option value="{{ key }}" {% if customer_profile.star == key %}selected{% endif %}>{{ value }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="dosham" class="form-label">Dosham</label>
-                        <input type="text" class="form-control" id="dosham" name="dosham" value="{{ customer_profile.dosham }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="dob" class="form-label">Date of Birth</label>
-                        <input type="text" class="form-control" id="dob" name="dob" value="{{ customer_profile.dob }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="time_birth" class="form-label">Time of Birth</label>
-                        <input type="text" class="form-control" id="time_birth" name="time_birth" value="{{ customer_profile.time_birth }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="place_birth" class="form-label">Place of Birth</label>
-                        <input type="text" class="form-control" id="place_birth" name="place_birth" value="{{ customer_profile.place_birth }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="height" class="form-label">Height</label>
-                        <input type="text" class="form-control" id="height" name="height" value="{{ customer_profile.height }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="weight" class="form-label">Weight</label>
-                        <input type="text" class="form-control" id="weight" name="weight" value="{{ customer_profile.weight }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="complexion" class="form-label">Complexion</label>
-                        <input type="text" class="form-control" id="complexion" name="complexion" value="{{ customer_profile.complexion }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="physical_condition" class="form-label">Physical Condition</label>
-                        <input type="text" class="form-control" id="physical_condition" name="physical_condition" value="{{ customer_profile.physical_condition }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="education" class="form-label">Education</label>
-                        <input type="text" class="form-control" id="education" name="education" value="{{ customer_profile.education }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="job" class="form-label">Job</label>
-                        <input type="text" class="form-control" id="job" name="job" value="{{ customer_profile.job }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="company" class="form-label">Company</label>
-                        <input type="text" class="form-control" id="company" name="company" value="{{ customer_profile.company }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="job_department" class="form-label">Job Department</label>
-                        <input type="text" class="form-control" id="job_department" name="job_department" value="{{ customer_profile.job_department }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="job_city" class="form-label">Job City</label>
-                        <input type="text" class="form-control" id="job_city" name="job_city" value="{{ customer_profile.job_city }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="income" class="form-label">Income</label>
-                        <input type="text" class="form-control" id="income" name="income" value="{{ customer_profile.income }}">
-                    </div>
-                    <div class="col-md-12 mt-3">
-                        <h5><i class="fas fa-map-marker-alt"></i> Address Details</h5>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="address" class="form-label">Full Address</label>
-                        <textarea class="form-control" id="address" name="address">{{ customer_profile.address }}</textarea>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="house_name" class="form-label">House Name</label>
-                        <input type="text" class="form-control" id="house_name" name="house_name" value="{{ customer_profile.house_name }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="street" class="form-label">Street</label>
-                        <input type="text" class="form-control" id="street" name="street" value="{{ customer_profile.street }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="city" class="form-label">City</label>
-                        <input type="text" class="form-control" id="city" name="city" value="{{ customer_profile.city }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="district" class="form-label">District</label>
-                        <input type="text" class="form-control" id="district" name="district" value="{{ customer_profile.district }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="post" class="form-label">Post</label>
-                        <input type="text" class="form-control" id="post" name="post" value="{{ customer_profile.post }}">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="pin_code" class="form-label">Pin Code</label>
-                        <input type="text" class="form-control" id="pin_code" name="pin_code" value="{{ customer_profile.pin_code }}">
-                    </div>
-                    <div class="col-md-12 mb-3">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" id="description" name="description">{{ customer_profile.description }}</textarea>
+                
+                <!-- Personal Information Section -->
+                <div class="form-section">
+                    <h5 class="section-title"><i class="fas fa-user"></i> Personal Information</h5>
+                    <div class="row">
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="first_name" class="form-label">First Name *</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" 
+                                   value="{{ user.first_name }}" placeholder="Enter your first name" required>
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="last_name" class="form-label">Last Name *</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" 
+                                   value="{{ user.last_name }}" placeholder="Enter your last name" required>
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="email" class="form-label">Email Address *</label>
+                            <input type="email" class="form-control" id="email" name="email" 
+                                   value="{{ user.email }}" placeholder="your.email@example.com" required>
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="contact_no" class="form-label">Mobile Number *</label>
+                            <input type="text" class="form-control" id="contact_no" name="contact_no" 
+                                   value="{{ customer_profile.contact_no }}" placeholder="+91 9876543210" required>
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="age" class="form-label">Age *</label>
+                            <input type="number" class="form-control" id="age" name="age" 
+                                   value="{{ customer_profile.age }}" min="18" max="100" required>
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="gender" class="form-label">Gender *</label>
+                            <select class="form-control form-select" id="gender" name="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male" {% if customer_profile.gender == 'Male' %}selected{% endif %}>Male</option>
+                                <option value="Female" {% if customer_profile.gender == 'Female' %}selected{% endif %}>Female</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Changes</button>
-                <a href="{% url 'customer_dashboard' %}" class="btn btn-secondary"><i class="fas fa-times"></i> Cancel</a>
+
+                <!-- Profile Image Section -->
+                <div class="form-section">
+                    <h5 class="section-title"><i class="fas fa-camera"></i> Profile Image</h5>
+                    <div class="profile-image-container">
+                        {% if customer_profile.profile_image %}
+                            <img src="{{ customer_profile.profile_image.url }}" alt="Current Profile Image" class="profile-image-preview">
+                            <p class="text-muted">Current profile image</p>
+                        {% else %}
+                            <div class="text-muted">
+                                <i class="fas fa-user-circle fa-5x mb-3" style="color: #dee2e6;"></i>
+                                <p>No profile image uploaded</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="file-input-wrapper">
+                        <div class="file-input-custom">
+                            <input type="file" class="form-control" id="profile_image" name="profile_image" accept="image/*">
+                            <i class="fas fa-cloud-upload-alt fa-2x mb-2" style="color: #667eea;"></i>
+                            <p class="mb-0">Click to upload a new profile image</p>
+                            <small class="text-muted">JPG, PNG or GIF (Max 5MB)</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Family Information Section -->
+                <div class="form-section">
+                    <h5 class="section-title"><i class="fas fa-home"></i> Family Information</h5>
+                    <div class="row">
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="father_name" class="form-label">Father's Name</label>
+                            <input type="text" class="form-control" id="father_name" name="father_name" 
+                                   value="{{ customer_profile.father_name }}" placeholder="Enter father's name">
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="mother_name" class="form-label">Mother's Name</label>
+                            <input type="text" class="form-control" id="mother_name" name="mother_name" 
+                                   value="{{ customer_profile.mother_name }}" placeholder="Enter mother's name">
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="father_job" class="form-label">Father's Occupation</label>
+                            <input type="text" class="form-control" id="father_job" name="father_job" 
+                                   value="{{ customer_profile.father_job }}" placeholder="Father's job">
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="mother_job" class="form-label">Mother's Occupation</label>
+                            <input type="text" class="form-control" id="mother_job" name="mother_job" 
+                                   value="{{ customer_profile.mother_job }}" placeholder="Mother's job">
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="married_sisters" class="form-label">Married Sisters</label>
+                            <input type="text" class="form-control" id="married_sisters" name="married_sisters" 
+                                   value="{{ customer_profile.married_sisters }}" placeholder="Number of married sisters">
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="married_brothers" class="form-label">Married Brothers</label>
+                            <input type="text" class="form-control" id="married_brothers" name="married_brothers" 
+                                   value="{{ customer_profile.married_brothers }}" placeholder="Number of married brothers">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Religious & Cultural Information -->
+                <div class="form-section">
+                    <h5 class="section-title"><i class="fas fa-om"></i> Religious & Cultural Details</h5>
+                    <div class="row">
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="caste" class="form-label">Caste</label>
+                            <select class="form-control form-select" id="caste" name="caste">
+                                <option value="">Select Caste</option>
+                                {% for key, value in customer_profile.CASTE_CHOICES %}
+                                    <option value="{{ key }}" {% if customer_profile.caste == key %}selected{% endif %}>{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="marital_status" class="form-label">Marital Status</label>
+                            <select class="form-control form-select" id="marital_status" name="marital_status">
+                                <option value="">Select Status</option>
+                                {% for key, value in customer_profile.MARITAL_STATUS_CHOICES %}
+                                    <option value="{{ key }}" {% if customer_profile.marital_status == key %}selected{% endif %}>{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="star" class="form-label">Star (Nakshatra)</label>
+                            <select class="form-control form-select" id="star" name="star">
+                                <option value="">Select Star</option>
+                                {% for key, value in customer_profile.STAR_CHOICES %}
+                                    <option value="{{ key }}" {% if customer_profile.star == key %}selected{% endif %}>{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="dosham" class="form-label">Dosham</label>
+                            <input type="text" class="form-control" id="dosham" name="dosham" 
+                                   value="{{ customer_profile.dosham }}" placeholder="Dosham details">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Birth Details -->
+                <div class="form-section">
+                    <h5 class="section-title"><i class="fas fa-birthday-cake"></i> Birth Details</h5>
+                    <div class="row">
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="dob" class="form-label">Date of Birth</label>
+                            <input type="date" class="form-control" id="dob" name="dob" 
+                                   value="{{ customer_profile.dob }}">
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="time_birth" class="form-label">Time of Birth</label>
+                            <input type="time" class="form-control" id="time_birth" name="time_birth" 
+                                   value="{{ customer_profile.time_birth }}">
+                        </div>
+                        <div class="col-md-12 form-row-spacing">
+                            <label for="place_birth" class="form-label">Place of Birth</label>
+                            <input type="text" class="form-control" id="place_birth" name="place_birth" 
+                                   value="{{ customer_profile.place_birth }}" placeholder="City, State">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Physical Attributes -->
+                <div class="form-section">
+                    <h5 class="section-title"><i class="fas fa-weight"></i> Physical Attributes</h5>
+                    <div class="row">
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="height" class="form-label">Height</label>
+                            <input type="text" class="form-control" id="height" name="height" 
+                                   value="{{ customer_profile.height }}" placeholder="e.g., 5'6&quot;">
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="weight" class="form-label">Weight</label>
+                            <input type="text" class="form-control" id="weight" name="weight" 
+                                   value="{{ customer_profile.weight }}" placeholder="e.g., 65 kg">
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="complexion" class="form-label">Complexion</label>
+                            <input type="text" class="form-control" id="complexion" name="complexion" 
+                                   value="{{ customer_profile.complexion }}" placeholder="e.g., Fair, Wheatish">
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="physical_condition" class="form-label">Physical Condition</label>
+                            <input type="text" class="form-control" id="physical_condition" name="physical_condition" 
+                                   value="{{ customer_profile.physical_condition }}" placeholder="e.g., Normal">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Information -->
+                <div class="form-section">
+                    <h5 class="section-title"><i class="fas fa-briefcase"></i> Professional Information</h5>
+                    <div class="row">
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="education" class="form-label">Education</label>
+                            <input type="text" class="form-control" id="education" name="education" 
+                                   value="{{ customer_profile.education }}" placeholder="Highest qualification">
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="job" class="form-label">Job Title</label>
+                            <input type="text" class="form-control" id="job" name="job" 
+                                   value="{{ customer_profile.job }}" placeholder="Current position">
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="company" class="form-label">Company</label>
+                            <input type="text" class="form-control" id="company" name="company" 
+                                   value="{{ customer_profile.company }}" placeholder="Company name">
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="job_department" class="form-label">Department</label>
+                            <input type="text" class="form-control" id="job_department" name="job_department" 
+                                   value="{{ customer_profile.job_department }}" placeholder="Department">
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="job_city" class="form-label">Work City</label>
+                            <input type="text" class="form-control" id="job_city" name="job_city" 
+                                   value="{{ customer_profile.job_city }}" placeholder="Work location">
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="income" class="form-label">Annual Income</label>
+                            <input type="text" class="form-control" id="income" name="income" 
+                                   value="{{ customer_profile.income }}" placeholder="e.g., 5-7 Lakhs">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address Information -->
+                <div class="form-section">
+                    <h5 class="section-title"><i class="fas fa-map-marker-alt"></i> Address Details</h5>
+                    <div class="row">
+                        <div class="col-md-12 form-row-spacing">
+                            <label for="address" class="form-label">Full Address</label>
+                            <textarea class="form-control" id="address" name="address" rows="3" 
+                                      placeholder="Enter complete address">{{ customer_profile.address }}</textarea>
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="house_name" class="form-label">House Name/Number</label>
+                            <input type="text" class="form-control" id="house_name" name="house_name" 
+                                   value="{{ customer_profile.house_name }}" placeholder="House name or number">
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="street" class="form-label">Street</label>
+                            <input type="text" class="form-control" id="street" name="street" 
+                                   value="{{ customer_profile.street }}" placeholder="Street name">
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="city" class="form-label">City</label>
+                            <input type="text" class="form-control" id="city" name="city" 
+                                   value="{{ customer_profile.city }}" placeholder="City">
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="district" class="form-label">District</label>
+                            <input type="text" class="form-control" id="district" name="district" 
+                                   value="{{ customer_profile.district }}" placeholder="District">
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="post" class="form-label">Post Office</label>
+                            <input type="text" class="form-control" id="post" name="post" 
+                                   value="{{ customer_profile.post }}" placeholder="Post office">
+                        </div>
+                        <div class="col-md-6 form-row-spacing">
+                            <label for="pin_code" class="form-label">Pin Code</label>
+                            <input type="text" class="form-control" id="pin_code" name="pin_code" 
+                                   value="{{ customer_profile.pin_code }}" placeholder="6-digit PIN code">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Yourself -->
+                <div class="form-section">
+                    <h5 class="section-title"><i class="fas fa-user-edit"></i> About Yourself</h5>
+                    <div class="col-md-12 form-row-spacing">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="4" 
+                                  placeholder="Tell us about yourself, your interests, and what you're looking for...">{{ customer_profile.description }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="button-container">
+                    <button type="submit" class="btn btn-primary" id="saveBtn">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                    <a href="{% url 'customer_dashboard' %}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                    <button type="button" class="btn btn-success" id="previewBtn">
+                        <i class="fas fa-eye"></i> Preview Profile
+                    </button>
+                </div>
             </form>
         </div>
     </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="successModalLabel">
+                        <i class="fas fa-check-circle"></i> Profile Updated Successfully!
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="fas fa-heart text-success fa-3x mb-3"></i>
+                    <p class="lead">Your profile has been updated successfully!</p>
+                    <p class="text-muted">Your changes are now visible to potential matches.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <a href="{% url 'customer_dashboard' %}" class="btn btn-success">
+                        <i class="fas fa-tachometer-alt"></i> Go to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Form Enhancement Scripts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add loading animation to form inputs on focus
+            const formInputs = document.querySelectorAll('.form-control, .form-select');
+            
+            formInputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.classList.add('loading');
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.classList.remove('loading');
+                });
+            });
+
+            // File input preview
+            const fileInput = document.getElementById('profile_image');
+            const imagePreview = document.querySelector('.profile-image-preview');
+            
+            if (fileInput) {
+                fileInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            if (imagePreview) {
+                                imagePreview.src = e.target.result;
+                                imagePreview.style.display = 'block';
+                            } else {
+                                // Create new image element if none exists
+                                const newImg = document.createElement('img');
+                                newImg.src = e.target.result;
+                                newImg.className = 'profile-image-preview';
+                                newImg.alt = 'Profile Preview';
+                                document.querySelector('.profile-image-container').prepend(newImg);
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            // Form validation
+            const form = document.getElementById('profileForm');
+            const saveBtn = document.getElementById('saveBtn');
+            
+            form.addEventListener('submit', function(e) {
+                // Add loading state to save button
+                saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+                saveBtn.disabled = true;
+                
+                // Basic validation
+                const requiredFields = form.querySelectorAll('[required]');
+                let isValid = true;
+                
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        field.classList.add('is-invalid');
+                        isValid = false;
+                    } else {
+                        field.classList.remove('is-invalid');
+                    }
+                });
+                
+                if (!isValid) {
+                    e.preventDefault();
+                    saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+                    saveBtn.disabled = false;
+                    
+                    // Show error message
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+                    alertDiv.innerHTML = `
+                        <i class="fas fa-exclamation-triangle"></i> 
+                        Please fill in all required fields.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    `;
+                    form.insertBefore(alertDiv, form.firstChild);
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+
+            // Preview Profile functionality
+            const previewBtn = document.getElementById('previewBtn');
+            if (previewBtn) {
+                previewBtn.addEventListener('click', function() {
+                    // Simple preview - you can enhance this to show a modal with profile preview
+                    const formData = new FormData(form);
+                    let previewContent = '<h4>Profile Preview</h4>';
+                    
+                    // Add basic preview functionality
+                    const firstName = formData.get('first_name') || '';
+                    const lastName = formData.get('last_name') || '';
+                    const age = formData.get('age') || '';
+                    const job = formData.get('job') || '';
+                    
+                    if (firstName || lastName) {
+                        previewContent += `<p><strong>Name:</strong> ${firstName} ${lastName}</p>`;
+                    }
+                    if (age) {
+                        previewContent += `<p><strong>Age:</strong> ${age}</p>`;
+                    }
+                    if (job) {
+                        previewContent += `<p><strong>Job:</strong> ${job}</p>`;
+                    }
+                    
+                    // You can create a modal here to show the preview
+                    alert('Profile preview functionality can be enhanced with a modal display');
+                });
+            }
+
+            // Auto-save draft functionality (optional)
+            let autoSaveTimer;
+            formInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    clearTimeout(autoSaveTimer);
+                    autoSaveTimer = setTimeout(() => {
+                        // Auto-save draft to localStorage (if needed)
+                        const formData = new FormData(form);
+                        const draftData = {};
+                        for (let [key, value] of formData.entries()) {
+                            draftData[key] = value;
+                        }
+                        // Note: localStorage is not available in Claude artifacts
+                        // localStorage.setItem('profileDraft', JSON.stringify(draftData));
+                    }, 2000);
+                });
+            });
+
+            // Smooth scrolling for form sections
+            const sectionTitles = document.querySelectorAll('.section-title');
+            sectionTitles.forEach(title => {
+                title.style.cursor = 'pointer';
+                title.addEventListener('click', function() {
+                    this.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+        });
+
+        // Phone number formatting
+        const phoneInput = document.getElementById('contact_no');
+        if (phoneInput) {
+            phoneInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length >= 10) {
+                    value = value.substring(0, 10);
+                    e.target.value = `+91 ${value.substring(0, 5)} ${value.substring(5)}`;
+                }
+            });
+        }
+
+        // PIN code validation
+        const pinInput = document.getElementById('pin_code');
+        if (pinInput) {
+            pinInput.addEventListener('input', function(e) {
+                e.target.value = e.target.value.replace(/\D/g, '').substring(0, 6);
+            });
+        }
+    </script>
 </body>
 
 </html>

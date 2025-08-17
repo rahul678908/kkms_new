@@ -751,3 +751,42 @@ def charity_delete(request, pk):
     charity = get_object_or_404(CharityManagement, pk=pk)
     charity.delete()
     return redirect("charity_management")
+
+import pandas as pd
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from accounts.models import Customer   # your accounts_customer model
+
+def import_customers(request):
+    if request.method == "POST" and request.FILES.get("file"):
+        excel_file = request.FILES["file"]
+
+        try:
+            # Detect file type
+            if excel_file.name.endswith(".csv"):
+                df = pd.read_csv(excel_file)
+            else:
+                df = pd.read_excel(excel_file)  # requires openpyxl
+
+            # Loop through rows and insert safely
+            for _, row in df.iterrows():
+                name = row.get("customer_id")
+                email = row.get("customer_name")
+                phone = row.get("customer_father_name")
+                
+                print(f"Processing: {name}, {email}, {phone}")
+                # check duplicates by email
+                if email and not Customer.objects.filter(email=email).exists():
+                    Customer.objects.create(
+                        name=name,
+                        email=email,
+                        phone=phone
+                    )
+
+            messages.success(request, "Data imported into accounts_customer successfully!")
+            return redirect("import-customers")
+
+        except Exception as e:
+            messages.error(request, f"Error importing file: {e}")
+
+    return render(request, "accounts/import_customers.html")
