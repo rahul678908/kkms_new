@@ -403,7 +403,11 @@
                             <td>{{ customer.created|date:"d M Y" }}</td>
                             <td>
                                 <a href="{% url 'customer_detail' customer.id %}" class="btn btn-primary btn-sm"><i class="fas fa-user"></i> Profile</a>
-                                <a href="" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                                <a href="{% url 'delete_customer' customer.id %}" 
+                                    class="btn btn-sm btn-danger" 
+                                    onclick="return confirm('Are you sure you want to delete this customer?');">
+                                    <i class="fas fa-trash"></i> Delete
+                                    </a>
                             </td>
                         </tr>
                         {% endfor %}
@@ -435,12 +439,15 @@
             }
         }
 
-        $(document).ready(function () {
-            $('#customerTable').DataTable({
-                "order": [[9, "desc"]],
-                "pageLength": 10
-            });
-        });
+$(document).ready(function () {
+    $('#customerTable').DataTable({
+        "order": [[3, "asc"]], // replace 3 with the index of your "Joined Date" column
+        "pageLength": 10,
+        "columnDefs": [
+            { "type": "date", "targets": 3 } // tells DataTables it's a date column
+        ]
+    });
+});
     </script>
 </body>
 

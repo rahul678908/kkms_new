@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,447 +7,283 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-/* Enhanced Matrimony Dashboard CSS */
+        /* Enhanced Matrimony Dashboard CSS */
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-/* Dashboard Header with Enhanced Gradient */
-.dashboard-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5c6ac4 100%);
-    color: white;
-    padding: 2.5rem 0;
-    margin-bottom: 2rem;
-    position: relative;
-    overflow: hidden;
-}
+        /* Container Enhancement */
+        .container {
+            max-width: 1200px;
+            padding: 0 15px;
+        }
 
-.dashboard-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><radialGradient id="a" cx="50%" cy="0%" r="100%"><stop offset="0%" stop-color="white" stop-opacity="0.1"/><stop offset="100%" stop-color="white" stop-opacity="0"/></radialGradient></defs><ellipse cx="50" cy="0" rx="50" ry="20" fill="url(%23a)"/></svg>');
-    animation: shimmer 3s ease-in-out infinite;
-}
+        /* Enhanced Navigation */
+        .navbar {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
 
-@keyframes shimmer {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.7; }
-}
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #fff !important;
+            display: flex;
+            align-items: center;
+        }
 
-/* Welcome Card with Glassmorphism Effect */
-.welcome-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    box-shadow: 
-        0 15px 35px rgba(0, 0, 0, 0.1),
-        0 5px 15px rgba(0, 0, 0, 0.05);
-    padding: 2.5rem;
-    margin-bottom: 2rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
-}
+        .navbar-brand i {
+            margin-right: 10px;
+            color: #e74c3c;
+        }
 
-.welcome-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 
-        0 25px 50px rgba(0, 0, 0, 0.15),
-        0 10px 25px rgba(0, 0, 0, 0.08);
-}
+        .navbar-nav {
+            align-items: center;
+            gap: 1rem;
+        }
 
-/* Enhanced Profile Image */
-.profile-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid #667eea;
-    box-shadow: 
-        0 8px 20px rgba(102, 126, 234, 0.3),
-        0 0 0 8px rgba(102, 126, 234, 0.1);
-    transition: all 0.3s ease;
-}
+        /* Enhanced Buttons */
+        .btn-profile, .logout-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
 
-.profile-image:hover {
-    transform: scale(1.05);
-    box-shadow: 
-        0 12px 30px rgba(102, 126, 234, 0.4),
-        0 0 0 12px rgba(102, 126, 234, 0.15);
-}
+        .btn-profile {
+            background: linear-gradient(135deg, #5ca40c, #4a8a0a);
+            color: #fff;
+        }
 
-/* Enhanced Info Cards */
-.info-card {
-    background: linear-gradient(145deg, #ffffff, #f8f9fa);
-    border-radius: 18px;
-    box-shadow: 
-        0 8px 25px rgba(0, 0, 0, 0.08),
-        0 2px 8px rgba(0, 0, 0, 0.04);
-    padding: 2rem;
-    margin-bottom: 1.5rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(102, 126, 234, 0.1);
-    position: relative;
-    overflow: hidden;
-}
+        .btn-profile:hover {
+            background: linear-gradient(135deg, #4a8a0a, #3e7608);
+            transform: translateY(-2px);
+            color: #fff;
+        }
 
-.info-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, #667eea, #764ba2);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-}
+        .logout-link {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: #fff;
+        }
 
-.info-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.12),
-        0 8px 20px rgba(0, 0, 0, 0.08);
-}
+        .logout-link:hover {
+            background: linear-gradient(135deg, #c82333, #b21e2f);
+            transform: translateY(-2px);
+            color: #fff;
+        }
 
-.info-card:hover::before {
-    transform: scaleX(1);
-}
+        .nav-icon {
+            margin-right: 8px;
+            font-size: 16px;
+        }
 
-.info-card h5 {
-    color: #667eea;
-    margin-bottom: 1.5rem;
-    font-weight: 700;
-    font-size: 1.25rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
+        /* Dashboard Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5c6ac4 100%);
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
 
-.info-card h5 i {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
+        .dashboard-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
 
-/* Enhanced Info Items */
-.info-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.75rem;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid rgba(102, 126, 234, 0.1);
-    transition: all 0.2s ease;
-}
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #667eea;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
 
-.info-item:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-}
+        /* Welcome Card */
+        .welcome-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
 
-.info-item:hover {
-    background: rgba(102, 126, 234, 0.05);
-    margin: 0 -1rem 0.75rem -1rem;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-}
+        /* Info Cards */
+        .info-card {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
 
-.info-label {
-    font-weight: 600;
-    color: #555;
-    font-size: 0.95rem;
-}
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
 
-.info-value {
-    color: #333;
-    font-weight: 500;
-    text-align: right;
-}
+        .info-card h5 {
+            color: #667eea;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
 
-/* Enhanced Navigation */
-.navbar-brand {
-    font-weight: 800;
-    font-size: 1.4rem;
-    background: linear-gradient(45deg, #fff, #f0f0f0);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f8f9fa;
+        }
 
-/* Enhanced Logout Button */
-.btn-logout {
-    background: linear-gradient(135deg, #dc3545, #c82333);
-    border: none;
-    border-radius: 25px;
-    padding: 10px 24px;
-    color: white;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
-    font-weight: 600;
-}
+        .info-label {
+            font-weight: 600;
+            color: #555;
+        }
 
-.btn-logout:hover {
-    background: linear-gradient(135deg, #c82333, #b21e2f);
-    color: white;
-    text-decoration: none;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
-}
+        .info-value {
+            color: #333;
+        }
 
-/* Enhanced Status Badges */
-.status-badge {
-    padding: 8px 18px;
-    border-radius: 25px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-}
+        /* Status Badges */
+        .status-badge {
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
 
-.status-approved {
-    background: linear-gradient(135deg, #d4edda, #c3e6cb);
-    color: #155724;
-    border: 1px solid rgba(21, 87, 36, 0.2);
-}
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
 
-.status-pending {
-    background: linear-gradient(135deg, #fff3cd, #ffeaa7);
-    color: #856404;
-    border: 1px solid rgba(133, 100, 4, 0.2);
-}
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
 
-.status-disapproved {
-    background: linear-gradient(135deg, #f8d7da, #f5c6cb);
-    color: #721c24;
-    border: 1px solid rgba(114, 28, 36, 0.2);
-}
+        .status-disapproved {
+            background: #f8d7da;
+            color: #721c24;
+        }
 
-.status-badge:hover {
-    transform: scale(1.05);
-}
+        /* Edit Button */
+        .btn-edit {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-weight: 600;
+        }
 
-/* Enhanced Profile Button */
-.btn-profile {
-    display: inline-flex;
-    align-items: center;
-    padding: 12px 24px;
-    background: linear-gradient(135deg, #5ca40c, #4a8a0a);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 30px;
-    font-size: 16px;
-    font-weight: 600;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(92, 164, 12, 0.3);
-    position: relative;
-    overflow: hidden;
-}
+        .btn-edit:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            transform: translateY(-2px);
+            color: #fff;
+        }
 
-.btn-profile::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
-}
+        /* Alerts */
+        .alert {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
 
-.btn-profile:hover::before {
-    left: 100%;
-}
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .navbar-nav {
+                margin-top: 1rem;
+                flex-direction: column;
+                align-items: stretch;
+            }
 
-.btn-profile .fas {
-    margin-right: 8px;
-    font-size: 18px;
-    transition: transform 0.3s ease;
-}
+            .btn-profile, .logout-link {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+            }
 
-.btn-profile:hover {
-    background: linear-gradient(135deg, #4a8a0a, #3e7608);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(92, 164, 12, 0.4);
-    color: #fff;
-    text-decoration: none;
-}
+            .dashboard-header h1 {
+                font-size: 1.8rem;
+            }
 
-.btn-profile:hover .fas {
-    transform: scale(1.1);
-}
+            .profile-image {
+                width: 80px;
+                height: 80px;
+            }
+        }
 
-.btn-profile:active {
-    transform: translateY(-1px);
-}
+        @media (max-width: 576px) {
+            .dashboard-header {
+                padding: 1.5rem 0;
+                text-align: center;
+            }
 
-.btn-profile:focus {
-    outline: 2px solid rgba(92, 164, 12, 0.5);
-    outline-offset: 2px;
-}
+            .dashboard-header h1 {
+                font-size: 1.5rem;
+            }
 
-/* Enhanced Edit Button */
-.btn-edit {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    border: none;
-    border-radius: 25px;
-    padding: 12px 24px;
-    color: white;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
+            .profile-image {
+                width: 60px;
+                height: 60px;
+                margin: 0 auto;
+                display: block;
+            }
 
-.btn-edit:hover {
-    background: linear-gradient(135deg, #764ba2, #667eea);
-    color: white;
-    text-decoration: none;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-}
+            .welcome-card, .info-card {
+                padding: 1rem;
+            }
 
-/* Logout Section Enhancement */
-.logout-section {
-    margin-left: 1rem;
-}
-
-.logout-link {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    background: linear-gradient(135deg, #dc3545, #c82333);
-    color: white;
-    text-decoration: none;
-    border-radius: 25px;
-    transition: all 0.3s ease;
-    font-weight: 600;
-    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
-}
-
-.logout-link:hover {
-    background: linear-gradient(135deg, #c82333, #b21e2f);
-    color: white;
-    text-decoration: none;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
-}
-
-.nav-icon {
-    margin-right: 8px;
-    font-size: 16px;
-}
-
-.nav-text {
-    font-size: 14px;
-}
-
-/* Enhanced Alerts */
-.alert {
-    border-radius: 15px;
-    border: none;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    font-weight: 500;
-}
-
-/* Body Background Enhancement */
-body {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    min-height: 100vh;
-}
-
-/* Container Enhancement */
-.container {
-    position: relative;
-}
-
-/* Responsive Enhancements */
-@media (max-width: 768px) {
-    .dashboard-header {
-        padding: 1.5rem 0;
-    }
-    
-    .welcome-card {
-        padding: 1.5rem;
-    }
-    
-    .info-card {
-        padding: 1.5rem;
-    }
-    
-    .profile-image {
-        width: 80px;
-        height: 80px;
-    }
-    
-    .btn-profile, .btn-logout {
-        padding: 8px 16px;
-        font-size: 14px;
-    }
-}
-
-/* Animation for smooth page load */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.info-card {
-    animation: fadeInUp 0.6s ease forwards;
-}
-
-.info-card:nth-child(1) { animation-delay: 0.1s; }
-.info-card:nth-child(2) { animation-delay: 0.2s; }
-.info-card:nth-child(3) { animation-delay: 0.3s; }
-.info-card:nth-child(4) { animation-delay: 0.4s; }
+            .btn-profile, .logout-link, .btn-edit {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
     </style>
 </head>
-
-<body style="background: #f8f9fa;">
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background: #343a40;">
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="#"><i class="fas fa-heart"></i> Matrimony Dashboard</a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link btn-profile" href="{% url 'matching_profiles' %}"><i class="fas fa-user"></i> Matching Profiles</a>
-                <div class="logout-section">
-                <a href="#" class="logout-link" onclick="confirmLogout(event)">
-                    <span class="nav-icon">🚪</span>
-                    <span class="nav-text">Logout</span>
-                </a>
-            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link btn-profile" href="{% url 'matching_profiles' %}"><i class="fas fa-user"></i> Matching Profiles</a>
+                    <div class="logout-section">
+                        <a href="#" class="logout-link" onclick="confirmLogout(event)">
+                            <span class="nav-icon">🚪</span>
+                            <span class="nav-text">Logout</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Dashboard Header -->
     <div class="dashboard-header">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-md-8">
-                    <h1><i class="fas fa-tachometer-alt"></i> Welcome, {{ customer.user.get_full_name  }}!</h1>
+                <div class="col-12 col-md-8">
+                    <h1><i class="fas fa-tachometer-alt"></i> Welcome, {{ customer.user.get_full_name }}!</h1>
                     <p class="mb-0">Manage your matrimony profile and find your perfect match</p>
                 </div>
-                <div class="col-md-4 text-end">
+                <div class="col-12 col-md-4 text-center text-md-end mt-3 mt-md-0">
                     {% if customer.profile_image %}
                     <img src="{{ customer.profile_image.url }}" alt="Profile Image" class="profile-image">
                     {% else %}
-                    <img src="https://via.placeholder.com/200" alt="No Image" class="img-fluid rounded">
+                    <img src="https://via.placeholder.com/200" alt="No Image" class="profile-image">
                     {% endif %}
                 </div>
             </div>
@@ -456,7 +291,6 @@ body {
     </div>
 
     <div class="container">
-        <!-- Display messages -->
         {% if messages %}
         {% for message in messages %}
         <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -466,10 +300,9 @@ body {
         {% endfor %}
         {% endif %}
 
-        <!-- Welcome Card -->
         <div class="welcome-card">
-            <div class="row">
-                <div class="col-md-8">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-8">
                     <h3>Account Status</h3>
                     <p>Your account registration status and basic information</p>
                     <div class="d-flex align-items-center">
@@ -486,7 +319,7 @@ body {
                         <a href="{% url 'edit_profile' %}" class="btn btn-edit"><i class="fas fa-edit"></i> Edit Profile</a>
                     </div>
                 </div>
-                <div class="col-md-4 text-end">
+                <div class="col-12 col-md-4 text-center text-md-end mt-3 mt-md-0">
                     <div class="text-muted">
                         <small>Member since: {{ customer.created|date:"M d, Y" }}</small>
                     </div>
@@ -495,8 +328,7 @@ body {
         </div>
 
         <div class="row">
-            <!-- Basic Information -->
-            <div class="col-md-6">
+            <div class="col-12 col-md-6">
                 <div class="info-card">
                     <h5><i class="fas fa-user"></i> Basic Information</h5>
                     <div class="info-item">
@@ -522,8 +354,7 @@ body {
                 </div>
             </div>
 
-            <!-- Personal Details -->
-            <div class="col-md-6">
+            <div class="col-12 col-md-6">
                 <div class="info-card">
                     <h5><i class="fas fa-heart"></i> Personal Details</h5>
                     <div class="info-item">
@@ -549,8 +380,7 @@ body {
                 </div>
             </div>
 
-            <!-- Professional Details -->
-            <div class="col-md-6">
+            <div class="col-12 col-md-6">
                 <div class="info-card">
                     <h5><i class="fas fa-briefcase"></i> Professional Details</h5>
                     <div class="info-item">
@@ -576,8 +406,7 @@ body {
                 </div>
             </div>
 
-            <!-- Family Details -->
-            <div class="col-md-6">
+            <div class="col-12 col-md-6">
                 <div class="info-card">
                     <h5><i class="fas fa-home"></i> Family Details</h5>
                     <div class="info-item">
@@ -603,12 +432,11 @@ body {
                 </div>
             </div>
 
-            <!-- Address Details -->
-            <div class="col-md-12">
+            <div class="col-12">
                 <div class="info-card">
                     <h5><i class="fas fa-map-marker-alt"></i> Address Details</h5>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-12 col-md-6">
                             <div class="info-item">
                                 <span class="info-label">House Name:</span>
                                 <span class="info-value">{{ customer.house_name }}</span>
@@ -622,7 +450,7 @@ body {
                                 <span class="info-value">{{ customer.post }}</span>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-12 col-md-6">
                             <div class="info-item">
                                 <span class="info-label">City:</span>
                                 <span class="info-value">{{ customer.city }}</span>
@@ -641,8 +469,7 @@ body {
             </div>
 
             {% if customer.description %}
-            <!-- Expectations -->
-            <div class="col-md-12">
+            <div class="col-12">
                 <div class="info-card">
                     <h5><i class="fas fa-star"></i> Expectations</h5>
                     <p class="mb-0">{{ customer.description }}</p>
@@ -652,18 +479,14 @@ body {
         </div>
     </div>
 
-
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function confirmLogout(event) {
-                    event.preventDefault(); // prevent default link behavior
-                    if (confirm('Are you sure you want to logout?')) {
-                        window.location.href = "{% url 'customer-login' %}";
-                    }
-                }
+            event.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = "{% url 'customer-login' %}";
+            }
+        }
     </script>
 </body>
-
 </html>

@@ -26,6 +26,91 @@ from datetime import datetime
 import os
 from django.utils import timezone
 
+def reset_password(request):
+    if request.method == "POST":
+        if "temp_customer_id" not in request.session:
+            # Verify email/mobile
+            email_or_mobile = request.POST.get("email_or_mobile")
+
+            try:
+                customer = Customer.objects.get(
+                    Q(user__email=email_or_mobile) | Q(contact_no=email_or_mobile)
+                )
+                request.session["temp_customer_id"] = customer.id
+                messages.success(request, "Please enter your new password.")
+                return render(request, "customer/reset_password.html")
+
+            except Customer.DoesNotExist:
+                messages.error(
+                    request, "No account found with this email or mobile number."
+                )
+                return render(request, "accounts/reset_password.html")
+
+        else:
+            # Handle password reset
+            new_password = request.POST.get("new_password")
+            confirm_password = request.POST.get("confirm_password")
+
+            if new_password != confirm_password:
+                messages.error(request, "Passwords do not match.")
+                return render(request, "customer/reset_password.html")
+
+            if len(new_password) < 8:
+                messages.error(request, "Password must be at least 8 characters long.")
+                return render(request, "customer/reset_password.html")
+
+            try:
+                customer = Customer.objects.get(id=request.session["temp_customer_id"])
+                
+                # update password in related User model
+                customer.user.password = make_password(new_password)
+                customer.user.save()
+
+                # Clear temporary session data
+                if "temp_customer_id" in request.session:
+                    del request.session["temp_customer_id"]
+
+                messages.success(
+                    request,
+                    "Password reset successfully. Please login with your new password.",
+                )
+                return redirect("customer-login")
+
+            except Customer.DoesNotExist:
+                messages.error(request, "An error occurred. Please try again.")
+                if "temp_customer_id" in request.session:
+                    del request.session["temp_customer_id"]
+                return redirect("forgot_password")
+
+    return render(request, "customer/reset_password.html")
+
+@login_required
+def forgot_password(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        phone = request.POST.get("phone")
+
+        try:
+            customer = Customer.objects.get(
+                customer_email=email,
+                customer_contact_no=phone
+            )
+            # Store customer ID in session temporarily
+            request.session["temp_customer_id"] = customer.customer_id
+            messages.success(request, "Please enter your new password.")
+            return redirect("reset_password")
+
+        except Customer.DoesNotExist:
+            messages.error(
+                request, "No account found with this email and mobile number."
+            )
+            return redirect("forgot_password")
+
+    # Clear any temporary session data
+    if "temp_customer_id" in request.session:
+        del request.session["temp_customer_id"]
+
+    return render(request, "customer/reset_password.html") 
 
 @login_required
 def edit_payment(request):
@@ -473,9 +558,14 @@ def home(request):
 
 @login_required
 def customer_list(request):
-    customers = Customer.objects.select_related('user').all()  # fetch related user
+    customers = Customer.objects.select_related('user').filter(is_active=True)  
     return render(request, 'super_admin/customers.html', {'customers': customers})
 
+def delete_customer(request, id):
+    customer = get_object_or_404(Customer, id=id)
+    customer.is_active = False
+    customer.save()
+    return redirect('customer-list')
 
 
 @login_required
@@ -603,7 +693,7 @@ def register_customer(request):
         )
 
         messages.success(request, "Customer registered successfully!")
-        return redirect("register_customer")
+        return redirect("customer-login")
 
     
     context = {

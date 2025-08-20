@@ -31,6 +31,7 @@ urlpatterns = [
     path('customers/', views.customer_list, name='customer-list'),
     path('customers/<int:pk>/', views.CustomerDetailView.as_view(), name='customer_detail'),
     path('customers/<int:pk>/edit/', views.CustomerUpdateView.as_view(), name='customer_edit'),
+    path('customer/delete/<int:id>/', views.delete_customer, name='delete_customer'),
 
 
     path("customers/<int:pk>/payments/modal/", views.payment_modal, name="payment_modal"),
@@ -46,6 +47,10 @@ urlpatterns = [
 
     path('register-customer/', views.register_customer, name='register_customer'),
     path('customer-login/', views.customer_login, name='customer-login'),
+    path("forgot-password/", views.forgot_password, name="forgot_password"),
+    path("reset-password/", views.reset_password, name="reset_password"),
+
+
     path("customer/dashboard/", views.customer_dashboard, name="customer_dashboard"),
     path('matching-profiles/', views.matching_profiles, name='matching_profiles'),
     path('send-interest/', views.send_interest, name='send_interest'),

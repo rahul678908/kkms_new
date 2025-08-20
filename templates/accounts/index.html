@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-	<head>
+<!--[if gt IE 8]--> <html class="no-js"> <!--<![endif]-->
+<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>{% block title %}{{ couple.groom_name|default:"Welcome to" }} & {{ couple.bride_name|default:"KERALA KAIKOLA/MUDALI SANGAM" }} - Wedding{% endblock %}</title>
@@ -48,6 +48,294 @@
 
 	{% block extra_css %}
 	<style>
+		/* Navigation Styling */
+		.fh5co-nav {
+			position: relative;
+			z-index: 1000;
+			background: rgba(255, 255, 255, 0.95);
+			backdrop-filter: blur(10px);
+			box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+		}
+		.fh5co-nav .menu-1 ul {
+			display: flex !important;
+			align-items: center !important;
+			justify-content: flex-end !important;
+			flex-wrap: wrap !important;
+			margin: 0 !important;
+			padding: 0 !important;
+			list-style: none !important;
+		}
+		.fh5co-nav .menu-1 li {
+			display: inline-block !important;
+			margin-left: 15px !important;
+		}
+		.fh5co-nav .menu-1 li a {
+			color: #333;
+			text-decoration: none;
+			padding: 10px 15px;
+			border-radius: 5px;
+			transition: all 0.3s ease;
+			font-weight: 500;
+		}
+		.fh5co-nav .menu-1 li a:hover,
+		.fh5co-nav .menu-1 li.active a {
+			background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+			color: white;
+		}
+		.login-btn-nav {
+			margin-left: 20px !important;
+		}
+		.btn-login {
+			background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%) !important;
+			color: white !important;
+			padding: 10px 20px !important;
+			border-radius: 25px !important;
+			font-size: 13px !important;
+			font-weight: 600 !important;
+			text-decoration: none !important;
+			display: inline-flex !important;
+			align-items: center !important;
+			gap: 8px !important;
+			transition: all 0.3s ease !important;
+			border: none !important;
+			box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3) !important;
+			text-transform: uppercase !important;
+			letter-spacing: 0.5px !important;
+			white-space: nowrap !important;
+		}
+		.btn-login:hover {
+			background: linear-gradient(135deg, #357ABD 0%, #2E6DA4 100%) !important;
+			transform: translateY(-2px) !important;
+			box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4) !important;
+			color: white !important;
+			text-decoration: none !important;
+		}
+		.btn-login:focus, 
+		.btn-login:active {
+			color: white !important;
+			text-decoration: none !important;
+			outline: none !important;
+		}
+		.btn-login i {
+			font-size: 14px !important;
+		}
+		/* Hamburger Menu Styling - Only visible on mobile */
+		.hamburger-menu {
+			display: none;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			width: 40px;
+			height: 40px;
+			cursor: pointer;
+			padding: 5px;
+			border-radius: 8px;
+			transition: all 0.3s ease;
+			background: transparent;
+			border: none;
+			position: relative;
+		}
+		.hamburger-menu:hover {
+			background: rgba(74, 144, 226, 0.1);
+		}
+		.hamburger-line {
+			width: 25px;
+			height: 3px;
+			background: #333;
+			margin: 3px 0;
+			transition: all 0.3s ease;
+			border-radius: 2px;
+		}
+		.hamburger-menu.active .hamburger-line:nth-child(1) {
+			transform: rotate(45deg) translate(6px, 6px);
+			background: #4A90E2;
+		}
+		.hamburger-menu.active .hamburger-line:nth-child(2) {
+			opacity: 0;
+		}
+		.hamburger-menu.active .hamburger-line:nth-child(3) {
+			transform: rotate(-45deg) translate(6px, -6px);
+			background: #4A90E2;
+		}
+		/* Mobile Menu Overlay */
+		.mobile-menu-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100vh;
+			background: rgba(0, 0, 0, 0.8);
+			z-index: 999;
+			opacity: 0;
+			visibility: hidden;
+			transition: all 0.3s ease;
+			backdrop-filter: blur(5px);
+		}
+		.mobile-menu-overlay.active {
+			opacity: 1;
+			visibility: visible;
+		}
+		/* Mobile Menu Container */
+		.mobile-menu {
+			position: fixed;
+			top: 0;
+			right: -350px;
+			width: 320px;
+			height: 100vh;
+			background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+			z-index: 1000;
+			transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+			box-shadow: -5px 0 25px rgba(0, 0, 0, 0.2);
+			overflow-y: auto;
+		}
+		.mobile-menu.active {
+			right: 0;
+		}
+		/* Mobile Menu Header */
+		.mobile-menu-header {
+			padding: 20px;
+			border-bottom: 1px solid #e9ecef;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+			color: white;
+		}
+		.mobile-menu-header h3 {
+			margin: 0;
+			font-size: 18px;
+			font-weight: 600;
+		}
+		.mobile-menu-close {
+			background: none;
+			border: none;
+			color: white;
+			font-size: 24px;
+			cursor: pointer;
+			padding: 5px;
+			border-radius: 50%;
+			width: 35px;
+			height: 35px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: all 0.3s ease;
+		}
+		.mobile-menu-close:hover {
+			background: rgba(255, 255, 255, 0.2);
+		}
+		/* Mobile Menu Items */
+		.mobile-menu-items {
+			padding: 20px 0;
+		}
+		.mobile-menu-item {
+			display: block;
+			padding: 15px 25px;
+			color: #333;
+			text-decoration: none;
+			font-weight: 500;
+			font-size: 16px;
+			border-bottom: 1px solid #f0f0f0;
+			transition: all 0.3s ease;
+			position: relative;
+			overflow: hidden;
+		}
+		.mobile-menu-item:before {
+			content: '';
+			position: absolute;
+			left: -100%;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(90deg, transparent, rgba(74, 144, 226, 0.1), transparent);
+			transition: all 0.5s ease;
+		}
+		.mobile-menu-item:hover:before {
+			left: 100%;
+		}
+		.mobile-menu-item:hover {
+			background: rgba(74, 144, 226, 0.05);
+			color: #4A90E2;
+			padding-left: 35px;
+		}
+		.mobile-menu-item.active {
+			background: rgba(74, 144, 226, 0.1);
+			color: #4A90E2;
+			border-left: 4px solid #4A90E2;
+		}
+		.mobile-menu-item i {
+			margin-right: 10px;
+			width: 20px;
+			text-align: center;
+		}
+		/* Mobile Login Button */
+		.mobile-login-section {
+			padding: 20px 25px;
+			border-top: 1px solid #e9ecef;
+			margin-top: auto;
+		}
+		.mobile-btn-login {
+			display: block;
+			width: 100%;
+			background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+			color: white;
+			padding: 15px 20px;
+			border-radius: 25px;
+			font-size: 16px;
+			font-weight: 600;
+			text-decoration: none;
+			text-align: center;
+			box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+			transition: all 0.3s ease;
+			border: none;
+		}
+		.mobile-btn-login:hover {
+			background: linear-gradient(135deg, #357ABD 0%, #2E6DA4 100%);
+			transform: translateY(-2px);
+			box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+			color: white;
+			text-decoration: none;
+		}
+		/* Hide mobile menu elements on desktop */
+		@media (min-width: 769px) {
+			.hamburger-menu,
+			.mobile-menu-overlay,
+			.mobile-menu {
+				display: none !important;
+			}
+			.navbar-toggle,
+			.navbar-collapse {
+				display: none !important;
+			}
+		}
+		/* Mobile Responsive Styles */
+		@media (max-width: 768px) {
+			.fh5co-nav .menu-1 ul {
+				display: none !important;
+			}
+			.hamburger-menu {
+				display: flex !important;
+			}
+			.fh5co-nav .col-xs-10 {
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+			}
+			.mobile-menu {
+				width: 280px;
+				right: -280px;
+			}
+		}
+		@media (max-width: 480px) {
+			.mobile-menu {
+				width: 100%;
+				right: -100%;
+			}
+			.mobile-menu-item {
+				padding: 12px 20px;
+				font-size: 15px;
+			}
+		}
 		/* News Section Styling */
 		.fh5co-news {
 			padding: 60px 0;
@@ -97,100 +385,7 @@
 			text-align: center;
 			padding: 20px;
 		}
-		@media (max-width: 768px) {
-			.fh5co-news .news-wrap {
-				margin-bottom: 20px;
-			}
-			.fh5co-news .news-image {
-				height: 150px;
-			}
-		}
-		/* Navigation styling to match about-us.html */
-		.fh5co-nav .menu-1 ul {
-			display: flex !important;
-			align-items: center !important;
-			justify-content: flex-end !important;
-			flex-wrap: wrap !important;
-		}
-		.fh5co-nav .menu-1 li {
-			display: inline-block !important;
-			margin-left: 15px !important;
-		}
-		.login-btn-nav {
-			margin-left: 20px !important;
-		}
-		.btn-login {
-			background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%) !important;
-			color: white !important;
-			padding: 8px 18px !important;
-			border-radius: 20px !important;
-			font-size: 12px !important;
-			font-weight: 600 !important;
-			text-decoration: none !important;
-			display: inline-flex !important;
-			align-items: center !important;
-			gap: 5px !important;
-			transition: all 0.3s ease !important;
-			border: none !important;
-			box-shadow: 0 3px 10px rgba(74, 144, 226, 0.3) !important;
-			text-transform: uppercase !important;
-			letter-spacing: 0.5px !important;
-			white-space: nowrap !important;
-		}
-		.btn-login:hover {
-			background: linear-gradient(135deg, #357ABD 0%, #2E6DA4 100%) !important;
-			transform: translateY(-1px) !important;
-			box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4) !important;
-			color: white !important;
-			text-decoration: none !important;
-		}
-		.btn-login:focus, 
-		.btn-login:active {
-			color: white !important;
-			text-decoration: none !important;
-			outline: none !important;
-		}
-		.btn-login i {
-			font-size: 12px !important;
-		}
-		@media (max-width: 992px) {
-			.fh5co-nav .menu-1 ul {
-				flex-direction: column !important;
-				align-items: flex-end !important;
-			}
-			.login-btn-nav {
-				margin-left: 0 !important;
-				margin-top: 10px !important;
-			}
-		}
-		@media (max-width: 768px) {
-			.fh5co-nav .menu-1 ul {
-				display: block !important;
-			}
-			.fh5co-nav .menu-1 li {
-				display: block !important;
-				margin-left: 0 !important;
-				text-align: right !important;
-				margin-bottom: 5px !important;
-			}
-			.btn-login {
-				padding: 10px 20px !important;
-				font-size: 13px !important;
-				justify-content: center !important;
-				width: auto !important;
-				display: inline-block !important;
-			}
-		}
-		.fh5co-nav .menu-1 {
-			position: relative;
-		}
-		.fh5co-nav .menu-1 ul li {
-			position: relative;
-		}
-		.login-btn-nav a {
-			vertical-align: middle !important;
-		}
-		/* Updated Hero Section Styling */
+		/* Hero Section Styling */
 		.hero-section {
 			background-size: cover !important;
 			background-position: center !important;
@@ -201,7 +396,7 @@
 			justify-content: center !important;
 			position: relative !important;
 			width: 100% !important;
-			background-color: #f5f5f5; /* Fallback color */
+			background-color: #f5f5f5;
 		}
 		.hero-section .container {
 			position: relative !important;
@@ -217,7 +412,7 @@
 			left: 0 !important;
 			width: 100% !important;
 			height: 100% !important;
-			background: rgba(0, 0, 0, 0.5) !important; /* Darker overlay for better text readability */
+			background: rgba(0, 0, 0, 0.5) !important;
 			z-index: 1 !important;
 		}
 		.hero-section h1 {
@@ -254,11 +449,58 @@
 			.hero-section p {
 				font-size: 16px;
 			}
+			.fh5co-news .news-wrap {
+				margin-bottom: 20px;
+			}
+			.fh5co-news .news-image {
+				height: 150px;
+			}
 		}
 	</style>
 	{% endblock %}
-	</head>
-	<body>
+</head>
+<body>
+	<div class="fh5co-loader"></div>
+	<div id="page">
+		<!-- Mobile Menu Overlay -->
+		<div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+		<!-- Mobile Menu -->
+		<div class="mobile-menu" id="mobileMenu">
+			<div class="mobile-menu-header">
+				<h3>Menu</h3>
+				<button class="mobile-menu-close" id="mobileMenuClose">
+					<i class="icon-cross"></i>
+				</button>
+			</div>
+			<div class="mobile-menu-items">
+				<a href="/" class="mobile-menu-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+					<i class="icon-home"></i> Home
+				</a>
+				<a href="/about/" class="mobile-menu-item {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+					<i class="icon-info"></i> About KKMS
+				</a>
+				<a href="/charity/" class="mobile-menu-item {% if request.resolver_match.url_name == 'charity' %}active{% endif %}">
+					<i class="icon-heart"></i> Charity
+				</a>
+				<a href="#" class="mobile-menu-item {% if request.resolver_match.url_name == 'privacy_policy' or request.resolver_match.url_name == 'terms' %}active{% endif %}">
+					<i class="icon-shield"></i> Policy
+				</a>
+				<a href="/contact/" class="mobile-menu-item {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+					<i class="icon-phone"></i> Contact
+				</a>
+				<a href="/register-customer/" class="mobile-menu-item {% if request.resolver_match.url_name == 'register' %}active{% endif %}">
+					<i class="icon-users"></i> Matrimony Register
+				</a>
+			</div>
+			<div class="mobile-login-section">
+				<a href="/customer-login/" class="mobile-btn-login">
+					<i class="icon-user"></i> Login
+				</a>
+			</div>
+		</div>
+
+		<!-- Navigation -->
 		<nav class="fh5co-nav" role="navigation">
 			<div class="container">
 				<div class="row">
@@ -270,6 +512,12 @@
 						</div>
 					</div>
 					<div class="col-xs-10 text-right menu-1">
+						<!-- Hamburger Menu Button (Mobile Only) -->
+						<button class="hamburger-menu" id="hamburgerMenu">
+							<span class="hamburger-line"></span>
+							<span class="hamburger-line"></span>
+							<span class="hamburger-line"></span>
+						</button>
 						<ul>
 							<li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
 								<a class="nav-link" href="/">Home</a>
@@ -281,13 +529,11 @@
 								<a class="nav-link" href="/charity/">Charity</a>
 							</li>
 							<li class="nav-item dropdown {% if request.resolver_match.url_name == 'privacy_policy' or request.resolver_match.url_name == 'terms' %}active{% endif %}">
-								<a class="nav-link dropdown-toggle" href="#" id="policyDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									Policy
-								</a>
-								{% comment %} <ul class="dropdown-menu" aria-labelledby="policyDropdown">
-									<li><a class="dropdown-item" href="/privacy-policy/">Privacy Policy</a></li>
-									<li><a class="dropdown-item" href="/terms-and-conditions/">Terms & Conditions</a></li>
-								</ul> {% endcomment %}
+								<a class="nav-link" href="#">Policy</a>
+								<ul class="dropdown">
+									<li><a href="/privacy-policy/">Privacy Policy</a></li>
+									<li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
+								</ul>
 							</li>
 							<li class="nav-item {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
 								<a class="nav-link" href="/contact/">Contact</a>
@@ -306,7 +552,7 @@
 			</div>
 		</nav>
 		
-		<!-- Hero/Banner Section with full coverage -->
+		<!-- Hero/Banner Section -->
 		<section class="hero-section" style="background-image: url('{{ banner.banner_image.url }}');">
 			<div class="container text-white">
 				<h1>{{ banner.banner_text1 }}</h1>
@@ -440,34 +686,31 @@
 				</div>
 			</div>
 		</footer>
-		</div>
+	</div>
 
-		<div class="gototop js-top">
-			<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
-		</div>
-		
-		<!-- jQuery -->
-		<script src="{% static 'js/jquery.min.js' %}"></script>
-		<!-- jQuery Easing -->
-		<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
-		<!-- Bootstrap -->
-		<script src="{% static 'js/bootstrap.min.js' %}"></script>
-		<!-- Waypoints -->
-		<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
-		<!-- Carousel -->
-		<script src="{% static 'js/owl.carousel.min.js' %}"></script>
-		<!-- countTo -->
-		<script src="{% static 'js/jquery.countTo.js' %}"></script>
-		<!-- Stellar -->
-		<script src="{% static 'js/jquery.stellar.min.js' %}"></script>
-		<!-- Magnific Popup -->
-		<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
-		<script src="{% static 'js/magnific-popup-options.js' %}"></script>
-		<script src="{% static 'js/simplyCountdown.js' %}"></script>
-		<!-- Main -->
-		<script src="{% static 'js/main.js' %}"></script>
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+	</div>
+	
+	<!-- Scripts -->
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'js/jquery.countTo.js' %}"></script>
+	<script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+	<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+	<script src="{% static 'js/magnific-popup-options.js' %}"></script>
+	<script src="{% static 'js/simplyCountdown.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
 
-		<script>
+	<script>
+		$(document).ready(function() {
+			// Hide loader on page load
+			$('.fh5co-loader').fadeOut('slow');
+
+			// Countdown Timer
 			{% if wedding_date %}
 			var weddingDate = new Date('{{ wedding_date|date:"Y-m-d" }}T00:00:00Z');
 			simplyCountdown('.simply-countdown-one', {
@@ -479,22 +722,102 @@
 				seconds: weddingDate.getSeconds()
 			});
 			{% endif %}
-			$(document).ready(function() {
-				$('.owl-carousel-fullwidth').owlCarousel({
-					animateOut: 'fadeOut',
-					animateIn: 'fadeIn',
-					items: 1,
-					loop: true,
-					margin: 10,
-					nav: true,
-					dots: true,
-					autoplay: true,
-					autoplayTimeout: 5000,
-					autoplayHoverPause: true
-				});
-				$('.js-counter').countTo();
+
+			// Carousel
+			$('.owl-carousel-fullwidth').owlCarousel({
+				animateOut: 'fadeOut',
+				animateIn: 'fadeIn',
+				items: 1,
+				loop: true,
+				margin: 10,
+				nav: true,
+				dots: true,
+				autoplay: true,
+				autoplayTimeout: 5000,
+				autoplayHoverPause: true
 			});
-		</script>
-		{% block extra_js %}{% endblock %}
-	</body>
+			$('.js-counter').countTo();
+
+			// Enhanced Mobile Menu Functionality
+			const hamburgerMenu = $('#hamburgerMenu');
+			const mobileMenu = $('#mobileMenu');
+			const mobileMenuOverlay = $('#mobileMenuOverlay');
+			const mobileMenuClose = $('#mobileMenuClose');
+
+			// Open mobile menu
+			hamburgerMenu.on('click', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				
+				$(this).addClass('active');
+				mobileMenuOverlay.addClass('active');
+				
+				setTimeout(() => {
+					mobileMenu.addClass('active');
+					$('body').css('overflow', 'hidden');
+				}, 100);
+			});
+
+			// Close mobile menu function
+			function closeMobileMenu() {
+				hamburgerMenu.removeClass('active');
+				mobileMenu.removeClass('active');
+				
+				setTimeout(() => {
+					mobileMenuOverlay.removeClass('active');
+					$('body').css('overflow', '');
+				}, 400);
+			}
+
+			// Close mobile menu on close button click
+			mobileMenuClose.on('click', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				closeMobileMenu();
+			});
+
+			// Close mobile menu on overlay click
+			mobileMenuOverlay.on('click', function(e) {
+				e.preventDefault();
+				closeMobileMenu();
+			});
+
+			// Prevent clicks inside mobile menu from closing it
+			mobileMenu.on('click', function(e) {
+				e.stopPropagation();
+			});
+
+			// Close mobile menu when clicking menu items
+			$('.mobile-menu-item').on('click', function() {
+				closeMobileMenu();
+			});
+
+			// Handle dropdown menu for desktop
+			$('.nav-item.dropdown').on('click', function(e) {
+				if ($(window).width() > 768) {
+					e.preventDefault();
+					$(this).toggleClass('active');
+					$(this).find('.dropdown').slideToggle(200);
+				}
+			});
+
+			// Close dropdown when clicking outside
+			$(document).on('click', function(e) {
+				if (!$(e.target).closest('.nav-item.dropdown').length && $(window).width() > 768) {
+					$('.nav-item.dropdown').removeClass('active');
+					$('.dropdown').slideUp(200);
+				}
+			});
+
+			// Ensure dropdowns are visible on desktop and hidden on mobile
+			$(window).on('resize', function() {
+				if ($(window).width() > 768) {
+					$('.dropdown').css('display', '');
+					closeMobileMenu();
+				}
+			});
+		});
+	</script>
+	{% block extra_js %}{% endblock %}
+</body>
 </html>

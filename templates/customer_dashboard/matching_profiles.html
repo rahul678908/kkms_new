@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,216 +8,28 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        .dashboard-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
+        body {
+            background: #f8f9fa;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        .welcome-card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            margin-bottom: 2rem;
+        .container {
+            max-width: 1200px;
+            padding: 0 15px;
         }
 
-        .profile-image {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #667eea;
-        }
-
-        .info-card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-
-        .info-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .info-card h5 {
-            color: #667eea;
-            margin-bottom: 1rem;
-            font-weight: bold;
-        }
-
-        .info-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #f8f9fa;
-        }
-
-        .info-item:last-child {
-            border-bottom: none;
-        }
-
-        .info-label {
-            font-weight: 600;
-            color: #555;
-        }
-
-        .info-value {
-            color: #333;
-        }
-
-        .navbar-brand {
-            font-weight: bold;
-        }
-
-        .status-badge {
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        .status-approved {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status-pending {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .status-disapproved {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        /* Beautiful Profile Button Styling */
-        .btn-profile {
-            display: inline-flex;
-            align-items: center;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #5ca40c 0%, #4a8a09 100%);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            margin-right: 1rem;
-            box-shadow: 0 4px 15px rgba(92, 164, 12, 0.3);
-        }
-
-        .btn-profile .fas {
-            margin-right: 8px;
-            font-size: 18px;
-        }
-
-        .btn-profile:hover {
-            background: linear-gradient(135deg, #4a8a09 0%, #5ca40c 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(92, 164, 12, 0.4);
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .btn-profile:active {
-            transform: translateY(0);
-        }
-
-        .btn-profile:focus {
-            outline: 2px solid #5ca40c;
-            outline-offset: 2px;
-        }
-
-        /* Beautiful Logout Button Styling */
-        .logout-section {
-            display: flex;
-            align-items: center;
-        }
-
-        .logout-link {
-            display: inline-flex;
-            align-items: center;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-            color: #fff !important;
-            text-decoration: none;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .logout-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .logout-link:hover::before {
-            left: 100%;
-        }
-
-        .logout-link:hover {
-            background: linear-gradient(135deg, #ee5a24 0%, #ff6b6b 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
-            color: #fff !important;
-            text-decoration: none;
-        }
-
-        .logout-link:active {
-            transform: translateY(0);
-        }
-
-        .nav-icon {
-            margin-right: 8px;
-            font-size: 18px;
-            display: inline-block;
-            transition: transform 0.3s ease;
-        }
-
-        .logout-link:hover .nav-icon {
-            transform: scale(1.1) rotate(15deg);
-        }
-
-        .nav-text {
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-
-        /* Navbar custom styling */
-        .custom-navbar {
+        /* Navigation */
+        .navbar {
             background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
             padding: 1rem 0;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .navbar-nav {
-            align-items: center;
-        }
-
         .navbar-brand {
-            color: #fff !important;
+            font-weight: 800;
             font-size: 1.5rem;
+            color: #fff !important;
             display: flex;
             align-items: center;
         }
@@ -228,67 +39,176 @@
             color: #e74c3c;
         }
 
+        .navbar-nav {
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-profile, .logout-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-profile {
+            background: linear-gradient(135deg, #5ca40c, #4a8a0a);
+            color: #fff;
+        }
+
+        .btn-profile:hover {
+            background: linear-gradient(135deg, #4a8a0a, #3e7608);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+
+        .logout-link {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: #fff;
+        }
+
+        .logout-link:hover {
+            background: linear-gradient(135deg, #c82333, #b21e2f);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+
+        .nav-icon {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        /* Dashboard Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #667eea;
+        }
+
+        /* Profile Cards */
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .btn-primary, .btn-secondary {
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-weight: 600;
+        }
+
+        /* Modal */
+        .modal-content {
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-body img {
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        /* Alerts */
+        .alert {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
         /* Responsive Design */
-        @media (max-width: 768px) {
+        @media (max-width: 992px) {
             .navbar-nav {
                 margin-top: 1rem;
+                flex-direction: column;
                 align-items: stretch;
             }
-            
+
             .btn-profile, .logout-link {
-                margin-bottom: 0.5rem;
-                margin-right: 0;
+                width: 100%;
                 justify-content: center;
-                width: 100%;
+                margin-bottom: 0.5rem;
             }
-            
-            .logout-section {
-                width: 100%;
+
+            .dashboard-header h1 {
+                font-size: 1.8rem;
             }
-            
-            .dashboard-header {
-                padding: 1.5rem 0;
-                text-align: center;
-            }
-            
+
             .profile-image {
                 width: 80px;
                 height: 80px;
-                margin-top: 1rem;
             }
-            
-            .dashboard-header h1 {
-                font-size: 1.8rem;
+
+            .card-img-top {
+                height: 150px;
             }
         }
 
         @media (max-width: 576px) {
-            .btn-profile, .logout-link {
-                font-size: 14px;
-                padding: 8px 16px;
+            .dashboard-header {
+                padding: 1.5rem 0;
+                text-align: center;
             }
-            
-            .navbar-brand {
-                font-size: 1.3rem;
-            }
-            
+
             .dashboard-header h1 {
                 font-size: 1.5rem;
             }
-        }
 
-        /* Additional responsive improvements */
-        @media (min-width: 992px) {
-            .navbar-nav {
-                margin-left: auto;
+            .profile-image {
+                width: 60px;
+                height: 60px;
+                margin: 0 auto;
+                display: block;
+            }
+
+            .card-img-top {
+                height: 120px;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                margin-bottom: 0.5rem;
             }
         }
     </style>
 </head>
-
-<body style="background: #f8f9fa;">
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="#"><i class="fas fa-heart"></i> Matrimony Dashboard</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
@@ -309,25 +229,18 @@
         </div>
     </nav>
 
-    <!-- Dashboard Header -->
     <div class="dashboard-header">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-md-8">
-                    <h1><i class="fas fa-tachometer-alt"></i>
-                        Welcome, {{ logged_in_customer.user.get_full_name }}!
-                    </h1>
+                <div class="col-12 col-md-8">
+                    <h1><i class="fas fa-tachometer-alt"></i> Welcome, {{ logged_in_customer.user.get_full_name }}!</h1>
                     <p class="mb-0">Manage your matrimony profile and find your perfect match</p>
                 </div>
-                <div class="col-md-4 text-end">
+                <div class="col-12 col-md-4 text-center text-md-end mt-3 mt-md-0">
                     {% if logged_in_customer.profile_image %}
-                    <img src="{{ logged_in_customer.profile_image.url }}" 
-                         alt="Profile Image" 
-                         class="profile-image">
+                    <img src="{{ logged_in_customer.profile_image.url }}" alt="Profile Image" class="profile-image">
                     {% else %}
-                    <img src="https://via.placeholder.com/200" 
-                         alt="No Image" 
-                         class="profile-image">
+                    <img src="https://via.placeholder.com/200" alt="No Image" class="profile-image">
                     {% endif %}
                 </div>
             </div>
@@ -335,7 +248,6 @@
     </div>
 
     <div class="container">
-        <!-- Display messages -->
         {% if messages %}
         {% for message in messages %}
         <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -345,12 +257,12 @@
         {% endfor %}
         {% endif %}
 
-        <div class="container mt-5">
+        <div class="container mt-4">
             <h2>Matching Profiles</h2>
             {% if matching_profiles %}
             <div class="row">
                 {% for profile in matching_profiles %}
-                <div class="col-md-4 mb-4">
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
                     <div class="card h-100">
                         {% if profile.profile_image %}
                         <img src="{{ profile.profile_image.url }}" class="card-img-top" alt="{{ profile.user.first_name }}">
@@ -366,13 +278,12 @@
                                 <strong>Marital Status:</strong> {{ profile.marital_status }}<br>
                                 <strong>District:</strong> {{ profile.district }}
                             </p>
-                            <!-- Single View Profile Button -->
                             <a href="#" class="btn btn-primary btn-sm view-profile-btn" data-id="{{ profile.id }}"
                                 data-bs-toggle="modal" data-bs-target="#profileModal">View Profile</a>
-                            <!-- Single Interest Button -->
                             {% if profile.id in sent_interest_ids %}
                             <button type="button" class="btn btn-secondary btn-sm" disabled>Interested</button>
                             {% else %}
+                            <button type="button" class="btn btn-success btn-sm interest-btn" data-id="{{ profile.id }}">Interest</button>
                             {% endif %}
                         </div>
                     </div>
@@ -385,7 +296,6 @@
         </div>
     </div>
 
-    <!-- Profile Modal -->
     <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -397,9 +307,13 @@
                     {% for profile in matching_profiles %}
                     <div id="modal-content-{{ profile.id }}" class="profile-modal-content d-none">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-12 col-md-6">
+                                {% if profile.profile_image %}
                                 <img src="{{ profile.profile_image.url }}" class="card-img-top">
-                                <h5>Name: {{ profile.user.first_name }} {{ profile.user.last_name }}</h5>
+                                {% else %}
+                                <img src="https://via.placeholder.com/200" class="card-img-top">
+                                {% endif %}
+                                <h5>{{ profile.user.first_name }} {{ profile.user.last_name }}</h5>
                                 <p><strong>Age:</strong> {{ profile.age }}</p>
                                 <p><strong>Gender:</strong> {{ profile.gender }}</p>
                                 <p><strong>Mobile:</strong> {{ profile.contact_no }}</p>
@@ -414,7 +328,7 @@
                                 <p><strong>Birth Place:</strong> {{ profile.place_birth }}</p>
                                 <p><strong>Date Of Birth:</strong> {{ profile.dob }}</p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-12 col-md-6">
                                 <p><strong>Height:</strong> {{ profile.height }}</p>
                                 <p><strong>Weight:</strong> {{ profile.weight }}</p>
                                 <p><strong>Complexion:</strong> {{ profile.complexion }}</p>
@@ -470,13 +384,10 @@
                     profileContentDiv.classList.remove('d-none');
                 }
             });
-        });
 
-        document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.interest-btn').forEach(button => {
                 button.addEventListener('click', function (e) {
                     e.preventDefault();
-
                     const receiverId = this.dataset.id;
                     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
                     const clickedButton = this;
@@ -516,5 +427,4 @@
         });
     </script>
 </body>
-
 </html>

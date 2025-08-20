@@ -1,71 +1,134 @@
 {% load static %}
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{% block title %}About Us - {{ wedding.title|default:"Wedding" }}{% endblock %}</title>
+    <title>Matrimony Register - KERALA KAIKOLA/MUDALI SANGAM</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{% block description %}{{ wedding.description|default:'Learn more about our wedding' }}{% endblock %}" />
-    <meta name="keywords" content="{% block keywords %}wedding, about, celebration, invitation{% endblock %}" />
-    <meta name="author" content="{{ wedding.couple_names|default:'Happy Couple' }}" />
+    <meta name="description" content="Register for matrimony services with Kerala Kaikola/Mudali Sangam" />
+    <meta name="keywords" content="matrimony, registration, marriage, kerala, kaikola, mudali" />
+    <meta name="author" content="KERALA KAIKOLA/MUDALI SANGAM" />
 
-    <!-- Facebook and Twitter integration -->
-    <meta property="og:title" content="About Us - {{ wedding.title|default:'Wedding Celebration' }}"/>
-    <meta property="og:image" content="{% if wedding.og_image %}{{ wedding.og_image.url }}{% endif %}"/>
-    <meta property="og:url" content="{{ request.build_absolute_uri }}"/>
-    <meta property="og:site_name" content="{{ wedding.title|default:'Wedding' }}"/>
-    <meta property="og:description" content="Learn about our wedding celebration"/>
-    <meta name="twitter:title" content="About Us - {{ wedding.title|default:'Wedding Celebration' }}" />
-    <meta name="twitter:image" content="{% if wedding.og_image %}{{ wedding.og_image.url }}{% endif %}" />
-    <meta name="twitter:url" content="{{ request.build_absolute_uri }}" />
-    <meta name="twitter:card" content="summary_large_image" />
-
-    <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Sacramento" rel='stylesheet'>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;500&display=swap" rel="stylesheet">
-    
-    <!-- External CSS -->
+
+    <!-- Animate.css -->
     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <!-- Icomoon Icon Fonts-->
     <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+    <!-- Bootstrap  -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
+    <!-- Magnific Popup -->
     <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+
+    <!-- Owl Carousel  -->
     <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+
+    <!-- Theme style  -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <!-- Modernizr JS -->
     <script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
+    <!-- FOR IE9 below -->
     <!--[if lt IE 9]>
     <script src="{% static 'js/respond.min.js' %}"></script>
     <![endif]-->
 
-    {% block extra_css %}
     <style>
-        /* =================================
-           CONTACT INFO SECTION
-           ================================= */
-        .fh5co-contact-info {
-            padding: 30px;
-            margin: 20px 0;
-        }
-        
-        .fh5co-contact-info ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .fh5co-contact-info li {
-            margin-bottom: 15px;
+        .register-form {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin: 40px 0;
         }
 
-        /* =================================
-           LOGIN BUTTON NAVIGATION
-           ================================= */
+        .form-section {
+            margin-bottom: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 30px;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            color: #F14E95;
+            font-size: 24px;
+            margin-bottom: 25px;
+            font-family: 'Sacramento', cursive;
+        }
+
+        .required-note {
+            color: #F14E95;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .required {
+            color: #F14E95;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        .form-control:focus {
+            border-color: #F14E95;
+            box-shadow: 0 0 5px rgba(241, 78, 149, 0.3);
+        }
+
+        .btn-register {
+            background: #F14E95;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .btn-register:hover {
+            background: #d63384;
+            transform: translateY(-2px);
+        }
+
+        .register-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+            url('{% static "images/img_bg_2.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 0 80px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .register-header h1 {
+            font-family: 'Sacramento', cursive;
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .register-header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
         .login-btn-nav {
             margin-left: 20px !important;
         }
@@ -97,7 +160,7 @@
             text-decoration: none !important;
         }
 
-        .btn-login:focus, 
+        .btn-login:focus,
         .btn-login:active {
             color: white !important;
             text-decoration: none !important;
@@ -108,7 +171,39 @@
             font-size: 12px !important;
         }
 
-        /* Navigation Menu Enhancements */
+        @media (max-width: 992px) {
+            .menu-1 ul {
+                flex-direction: column !important;
+                align-items: flex-end !important;
+            }
+
+            .login-btn-nav {
+                margin-left: 0 !important;
+                margin-top: 10px !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-1 ul {
+                display: block !important;
+            }
+
+            .menu-1 li {
+                display: block !important;
+                margin-left: 0 !important;
+                text-align: right !important;
+                margin-bottom: 5px !important;
+            }
+
+            .btn-login {
+                padding: 10px 20px !important;
+                font-size: 13px !important;
+                justify-content: center !important;
+                width: auto !important;
+                display: inline-block !important;
+            }
+        }
+
         .fh5co-nav .menu-1 {
             position: relative;
         }
@@ -120,177 +215,17 @@
         .login-btn-nav a {
             vertical-align: middle !important;
         }
-
-        /* =================================
-           ABOUT SECTION STYLING
-           ================================= */
-        
-        /* Main Section Typography */
-        .about-section h2.text-center {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            color: #2B2B2B;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            letter-spacing: 1px;
-            text-transform: capitalize;
-        }
-
-        .about-section p {
-            font-family: 'Lora', serif;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #333;
-            margin-bottom: 20px;
-            font-weight: 400;
-            letter-spacing: 0.2px;
-        }
-
-        .about-section p strong {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            color: #2B2B2B;
-            font-size: 1.2rem;
-        }
-
-        /* Image Cards */
-        .about-section .image-card {
-            position: relative;
-            overflow: hidden;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background: #fff;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .about-section .image-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .about-section .image-card img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            transition: transform 0.3s ease;
-            object-fit: cover;
-            max-height: 250px;
-        }
-
-        .about-section .image-card:hover img {
-            transform: scale(1.05);
-        }
-
-        .about-section .image-card h3 {
-            font-size: 1.5rem;
-            margin: 15px 0 10px;
-            color: #2B2B2B;
-            text-align: center;
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            text-transform: capitalize;
-            letter-spacing: 0.5px;
-        }
-
-        .about-section .image-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            border-radius: 8px;
-            z-index: 1;
-        }
-
-        .about-section .image-card:hover::before {
-            opacity: 1;
-        }
-
-        /* =================================
-           RESPONSIVE DESIGN
-           ================================= */
-
-        /* Tablet and Small Desktop */
-        @media (max-width: 992px) {
-            .menu-1 ul {
-                flex-direction: column !important;
-                align-items: flex-end !important;
-            }
-            
-            .login-btn-nav {
-                margin-left: 0 !important;
-                margin-top: 10px !important;
-            }
-        }
-
-        /* Mobile Devices */
-        @media (max-width: 768px) {
-            /* Navigation */
-            .menu-1 ul {
-                display: block !important;
-            }
-            
-            .menu-1 li {
-                display: block !important;
-                margin-left: 0 !important;
-                text-align: right !important;
-                margin-bottom: 5px !important;
-            }
-            
-            .btn-login {
-                padding: 10px 20px !important;
-                font-size: 13px !important;
-                justify-content: center !important;
-                width: auto !important;
-                display: inline-block !important;
-            }
-
-            /* About Section */
-            .about-section .image-card {
-                padding: 10px;
-            }
-            
-            .about-section .image-card h3 {
-                font-size: 1.3rem;
-            }
-            
-            .about-section .image-card img {
-                max-height: 200px;
-            }
-            
-            .about-section p {
-                font-size: 1rem;
-            }
-            
-            .about-section p strong {
-                font-size: 1.1rem;
-            }
-            
-            .about-section h2.text-center {
-                font-size: 2rem;
-            }
-        }
     </style>
-    {% endblock %}
 </head>
 
 <body>
-    <div class="fh5co-loader"></div>
-    
     <div id="page">
-        <!-- Navigation -->
         <nav class="fh5co-nav" role="navigation">
             <div class="container">
                 <div class="row">
                     <div class="col-xs-2">
                         <div id="fh5co-logo">
-                            <a href="{% url 'home' %}">
+                            <a href="">
                                 <img src="{% static 'images/logo.png' %}" alt="KKMS Logo" style="height: 40px;">
                             </a>
                         </div>
@@ -330,102 +265,405 @@
             </div>
         </nav>
 
-        <!-- Header Section -->
-        <header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image: url('{% static 'images/bride.jpg' %}'); background-size: cover;">
-            <div class="overlay" style="background-color: rgba(0,0,0,0.4);">
-                <div class="fh5co-container">
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-2 text-center">
-                            <div class="display-t">
-                                <div class="display-tc animate-box" data-animate-effect="fadeIn">
-                                    <h1>{% block header_title %}About KKMS{% endblock %}</h1>
-                                    <h2>{% block header_subtitle %}Know About Us{% endblock %}</h2>
-                                </div>
-                            </div>
-                        </div>
+        <!-- Register Header -->
+        <div class="register-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 style="color:white">Register</h1>
+                        <p>Join Kerala Kaikola/Mudali Sangam Matrimony</p>
                     </div>
                 </div>
             </div>
-        </header>
+        </div>
 
-        <!-- Main Content -->
-        <div class="fh5co-section about-section">
-            <div class="container">
-                <!-- Hero Section -->
-                <section class="hero-section">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h1 class="text-center">{{ about_us.main_title }}</h1>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- About Content -->
-                <section class="row">
-                    <div class="col-md-12">
-                        <div class="about-content">
-                            <h2>Mission: </h2>
-                            <p>{{ about_us.mission }}</p>
-
-                            <h2>Affiliation: </h2>
-                            <p>{{ about_us.affiliation }}</p>
-
-                            <h2>History: </h2>
-                            <p>{{ about_us.history }}</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Team/Images Section -->
-                <section class="about-images">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h2 class="text-center">Team / Images</h2>
-                        </div>
-                    </div>
-                    <div class="row">
-                        {% for img in images %}
-                        <div class="col-md-3 col-sm-6 col-xs-12">
-                            <div class="image-card">
-                                <img src="{{ img.image.url }}" alt="{{ img.designation }}" class="img-responsive">
-                                {% if img.designation %}
-                                <h3>{{ img.designation }}</h3>
-                                {% endif %}
-                            </div>
-                        </div>
-                        {% empty %}
-                        <div class="col-md-12">
-                            <p class="text-center">No images available.</p>
+        <!-- Registration Form -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="register-form">
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
                         </div>
                         {% endfor %}
+                        {% endif %}
+                        <form method="post" enctype="multipart/form-data" action="{% url 'register_customer' %}">
+                            {% csrf_token %}
+
+                            <div class="form-section">
+                                <h3 class="section-title">Basic Info</h3>
+                                <p class="required-note">Please fill mandatory(*) fields</p>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="first_name">First Name<span class="required">(*)</span></label>
+                                            <input type="text" class="form-control" id="first_name" name="first_name">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="last_name">Last Name</label>
+                                            <input type="text" class="form-control" id="last_name" name="last_name">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="email">Email Id<span class="required">(*)</span></label>
+                                            <input type="email" class="form-control" id="email" name="email">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="mobile">Mobile Number<span class="required">(*)</span></label>
+                                            <input type="tel" class="form-control" id="mobile" name="mobile">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="password">Password<span class="required">(*)</span></label>
+                                            <input type="password" class="form-control" id="password" name="password">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="confirm_password">Confirm Password<span class="required">(*)</span></label>
+                                            <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="house_name">House Name</label>
+                                            <input type="text" class="form-control" id="house_name" name="house_name">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="street">Street</label>
+                                            <input type="text" class="form-control" id="street" name="street">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="post">Post</label>
+                                            <input type="text" class="form-control" id="post" name="post">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="city">City</label>
+                                            <input type="text" class="form-control" id="city" name="city">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="district">District</label>
+                                            <input type="text" class="form-control" id="district" name="district">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="pincode">Pin-Code</label>
+                                            <input type="text" class="form-control" id="pincode" name="pincode">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="current_address">Current Address</label>
+                                            <input type="text" class="form-control" id="current_address" name="current_address">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Personal Details Section -->
+                            <div class="form-section">
+                                <h3 class="section-title">Personal Details</h3>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="gender">Gender</label>
+                                            <select class="form-control" id="gender" name="gender">
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="dob">Date Of Birth</label>
+                                            <input type="date" class="form-control" id="dob" name="dob" placeholder="dd-mm-yyyy">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="birth_time">Time of Birth</label>
+                                            <input type="time" class="form-control" id="birth_time" name="birth_time">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="age">Age</label>
+                                            <input type="number" class="form-control" id="age" name="age">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="birth_place">Place of Birth</label>
+                                            <input type="text" class="form-control" id="birth_place" name="birth_place">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="customer_star">Star</label>
+                                            <select class="form-control" id="customer_star" name="customer_star">
+                                                <option value="">Select Star</option>
+                                                {% for value, display in STAR_CHOICES %}
+                                                <option value="{{ value }}">{{ display }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="height">Height(CM)</label>
+                                            <input type="number" class="form-control" id="height" name="height">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="weight">Weight(KG)</label>
+                                            <input type="number" class="form-control" id="weight" name="weight">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="complexion">Complexion</label>
+                                            <select class="form-control" id="complexion" name="complexion">
+                                                <option value="White">White</option>
+                                                <option value="Fair">Fair</option>
+                                                <option value="Wheatish">Wheatish</option>
+                                                <option value="Dark">Dark</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="marital_status">Marital Status</label>
+                                            <select class="form-control" id="marital_status" name="marital_status">
+                                                <option value="">Select Status</option>
+                                                {% for value, display in MARITAL_STATUS_CHOICES %}
+                                                <option value="{{ value }}">{{ display }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="physical_condition">Physical Condition</label>
+                                            <select class="form-control" id="physical_condition" name="physical_condition">
+                                                <option value="Normal">Normal</option>
+                                                <option value="Physically Challenged">Physically Challenged</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="caste">Caste</label>
+                                            <select class="form-control" id="caste" name="caste" required>
+                                                <option value="">Select Caste</option>
+                                                {% for value, display in CASTE_CHOICES %}
+                                                <option value="{{ value }}">{{ display }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="dosham">Dosham / Dosh</label>
+                                        <input type="text" class="form-control" id="dosham" name="dosham">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="profile_image">Profile Image</label>
+                                        <input type="file" class="form-control" id="profile_image" name="profile_image" accept="image/*">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Education Details Section -->
+                            <div class="form-section">
+                                <h3 class="section-title">Education Details</h3>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="job_sector">Job Sector</label>
+                                            <select class="form-control" id="job_sector" name="job_sector">
+                                                <option value="Software">Software</option>
+                                                <option value="Healthcare">Healthcare</option>
+                                                <option value="Education">Education</option>
+                                                <option value="Finance">Finance</option>
+                                                <option value="Government">Government</option>
+                                                <option value="Business">Business</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="job">Job</label>
+                                            <input type="text" class="form-control" id="job" name="job">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="job_city">Job City</label>
+                                            <input type="text" class="form-control" id="job_city" name="job_city">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="company">Company</label>
+                                            <input type="text" class="form-control" id="company" name="company">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="monthly_income">Monthly Income</label>
+                                            <input type="number" class="form-control" id="monthly_income" name="monthly_income">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="education">Education</label>
+                                            <input type="text" class="form-control" id="education" name="education">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Family Details Section -->
+                            <div class="form-section">
+                                <h3 class="section-title">Family Details</h3>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="father_name">Fathers Name</label>
+                                            <input type="text" class="form-control" id="father_name" name="father_name">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="father_job">Father Job</label>
+                                            <input type="text" class="form-control" id="father_job" name="father_job">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="mother_name">Mother Name</label>
+                                            <input type="text" class="form-control" id="mother_name" name="mother_name">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="mother_job">Mother Job</label>
+                                            <input type="text" class="form-control" id="mother_job" name="mother_job">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="num_brothers">Number of Brothers</label>
+                                            <input type="number" class="form-control" id="num_brothers" name="num_brothers">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="married_brothers">Married Brothers</label>
+                                            <input type="number" class="form-control" id="married_brothers" name="married_brothers">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="num_sisters">Number of Sisters</label>
+                                            <input type="number" class="form-control" id="num_sisters" name="num_sisters">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="married_sisters">Married Sisters</label>
+                                            <input type="number" class="form-control" id="married_sisters" name="married_sisters">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="expectation">Expectation</label>
+                                            <textarea class="form-control" id="expectation" name="expectation" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-register">Submit</button>
+                            </div>
+                        </form>
                     </div>
-                </section>
+                </div>
             </div>
         </div>
 
-        <!-- Footer -->
         <footer id="fh5co-footer" role="contentinfo">
             <div class="container">
                 <div class="row copyright">
                     <div class="col-md-12 text-center">
                         <p>
-                            <small class="block">© {% now "Y" %} {{ about.author|default:"KKMS Team" }}. All Rights Reserved.</small> 
-                            <small class="block">Designed and Developed by <a href="https://www.techfifoinnovations.com/" target="_blank">TechFIFO Innovations</a></small>
+                            <small class="block">© {% now "Y" %} {{ couple.groom_name|default:"Copyrights" }}. All Rights Reserved.</small>
+                            <small class="block">{% if custom_footer %}{{ custom_footer }}{% else %}Designed and Developed by TechFIFO Innovations{% endif %}</small>
                         </p>
                         <p>
                             <ul class="fh5co-social-icons">
-                                {% if social_links.twitter %}
-                                <li><a href="{{ social_links.twitter }}" target="_blank"><i class="icon-twitter"></i></a></li>
-                                {% endif %}
-                                {% if social_links.facebook %}
-                                <li><a href="{{ social_links.facebook }}" target="_blank"><i class="icon-facebook"></i></a></li>
-                                {% endif %}
-                                {% if social_links.linkedin %}
-                                <li><a href="{{ social_links.linkedin }}" target="_blank"><i class="icon-linkedin"></i></a></li>
-                                {% endif %}
-                                {% if social_links.instagram %}
-                                <li><a href="{{ social_links.instagram }}" target="_blank"><i class="icon-dribbble"></i></a></li>
-                                {% endif %}
+                                <li><a href="#"><i class="icon-twitter"></i></a></li>
+                                <li><a href="#"><i class="icon-facebook"></i></a></li>
+                                <li><a href="#"><i class="icon-instagram"></i></a></li>
+                                <li><a href="#"><i class="icon-linkedin"></i></a></li>
                             </ul>
                         </p>
                     </div>
@@ -434,27 +672,55 @@
         </footer>
     </div>
 
-    <!-- Go to Top -->
     <div class="gototop js-top">
         <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
     </div>
-    
-    <!-- Scripts -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelector('.fh5co-loader').style.display = 'none';
-        });
-    </script>
-    
+
+    <!-- jQuery -->
     <script src="{% static 'js/jquery.min.js' %}"></script>
+    <!-- jQuery Easing -->
     <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+    <!-- Bootstrap -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- Waypoints -->
     <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <!-- Carousel -->
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <!-- countTo -->
     <script src="{% static 'js/jquery.countTo.js' %}"></script>
+    <!-- Stellar -->
     <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+    <!-- Magnific Popup -->
     <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
     <script src="{% static 'js/magnific-popup-options.js' %}"></script>
+    <!-- Main -->
     <script src="{% static 'js/main.js' %}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Form validation
+            $('form').on('submit', function(e) {
+                var password = $('#password').val();
+                var confirmPassword = $('#confirm_password').val();
+                
+                if (password !== confirmPassword) {
+                    e.preventDefault();
+                    alert('Passwords do not match!');
+                    return false;
+                }
+            });
+            
+            // Calculate age from date of birth
+            $('#dob').on('change', function() {
+                var dob = new Date($(this).val());
+                var today = new Date();
+                var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+                $('#age').val(age);
+            });
+        });
+    </script>
 </body>
 </html>
