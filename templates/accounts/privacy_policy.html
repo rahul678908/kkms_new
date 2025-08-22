@@ -165,52 +165,58 @@
 	<div class="fh5co-loader"></div>
 	
 	<div id="page">
-		<nav class="fh5co-nav" role="navigation">
-			<div class="container">
-				<div class="row">
-					<div class="col-xs-2">
-						<div id="fh5co-logo">
-							<a href="{% url 'home' %}">
-								<img src="{% static 'images/logo.png' %}" alt="KKMS Logo" style="height: 40px;">
-							</a>
-						</div>
-					</div>
-					<div class="col-xs-10 text-right menu-1">
-						<ul>
-							<li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
-								<a class="nav-link" href="/">Home</a>
-							</li>
-							<li class="nav-item {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
-								<a class="nav-link" href="/about/">About KKMS</a>
-							</li>
-							<li class="nav-item {% if request.resolver_match.url_name == 'charity' %}active{% endif %}">
-								<a class="nav-link" href="/charity/">Charity</a>
-							</li>
-							<li class="nav-item dropdown {% if request.resolver_match.url_name == 'privacy_policy' or request.resolver_match.url_name == 'terms' %}active{% endif %}">
-								<a class="nav-link dropdown-toggle" href="#" id="policyDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									Policy
-								</a>
-								<ul class="dropdown-menu" aria-labelledby="policyDropdown">
-									<li><a class="dropdown-item" href="/privacy-policy/">Privacy Policy</a></li>
-									<li><a class="dropdown-item" href="/terms-and-conditions/">Terms & Conditions</a></li>
-								</ul>
-							</li>
-							<li class="nav-item {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
-								<a class="nav-link" href="/contact/">Contact</a>
-							</li>
-							<li class="nav-item {% if request.resolver_match.url_name == 'register' %}active{% endif %}">
-								<a class="nav-link" href="/register-customer/">Matrimony Register</a>
-							</li>
-							<li class="nav-item login-btn-nav">
-								<a href="/customer-login/" class="btn-login">
-									<i class="icon-user"></i> Login
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</nav>
+        <nav class="fh5co-nav" role="navigation">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <!-- Logo Image instead of text -->
+                        <div id="fh5co-logo">
+                            <a href="{% url 'home' %}">
+                                <img src="{% static 'images/logo.png' %}" alt="KKMS Logo" style="height: 40px;">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xs-10 text-right menu-1">
+                        <ul>
+                            <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                                <a href="/">Home</a>
+                            </li>
+                            <li class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                                <a href="/about/">About KKMS</a>
+                            </li>
+                            <li class="has-dropdown {% if request.resolver_match.url_name == 'history' or request.resolver_match.url_name == 'registration' %}active{% endif %}">
+                                <a href="#">Information</a>
+                                <ul class="dropdown">
+                                    <li><a href="/history/">History</a></li>
+                                    <li><a href="/registration/">Registration Form</a></li>
+                                </ul>
+                            </li>
+                            <li class="{% if request.resolver_match.url_name == 'charity' %}active{% endif %}">
+                                <a href="/charity/">Charity</a>
+                            </li>
+                            <li class="has-dropdown {% if request.resolver_match.url_name == 'privacy_policy' or request.resolver_match.url_name == 'terms' %}active{% endif %}">
+                                <a href="#">Policy</a>
+                                <ul class="dropdown">
+                                    <li><a href="/privacy-policy/">Privacy Policy</a></li>
+                                    <li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
+                                </ul>
+                            </li>
+                            <li class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+                                <a href="/contact/">Contact</a>
+                            </li>
+                            <li class="{% if request.resolver_match.url_name == 'register' %}active{% endif %}">
+                                <a href="/register-customer/">Matrimony Register</a>
+                            </li>
+                            <li class="login-btn-nav">
+                                <a href="/customer-login/" class="btn-login">
+                                    <i class="icon-user"></i> Login
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
 		
 	<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url({% if wedding.header_image %}{{ wedding.header_image.url }}{% else %}{% static 'images/img_bg_1.jpg' %}{% endif %});">
 		<div class="overlay"></div>

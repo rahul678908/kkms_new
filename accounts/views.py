@@ -26,6 +26,12 @@ from datetime import datetime
 import os
 from django.utils import timezone
 
+def registration_page(request):
+    return render(request, "accounts/registration.html")
+
+def history(request):
+    return render(request, "accounts/history.html")
+
 def reset_password(request):
     if request.method == "POST":
         if "temp_customer_id" not in request.session:

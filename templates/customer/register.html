@@ -229,7 +229,7 @@
                     <div class="col-xs-2">
                         <!-- Logo Image instead of text -->
                         <div id="fh5co-logo">
-                            <a href="">
+                            <a href="{% url 'home' %}">
                                 <img src="{% static 'images/logo.png' %}" alt="KKMS Logo" style="height: 40px;">
                             </a>
                         </div>
@@ -242,11 +242,17 @@
                             <li class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">
                                 <a href="/about/">About KKMS</a>
                             </li>
+                            <li class="has-dropdown {% if request.resolver_match.url_name == 'history' or request.resolver_match.url_name == 'registration' %}active{% endif %}">
+                                <a href="#">Information</a>
+                                <ul class="dropdown">
+                                    <li><a href="/history/">History</a></li>
+                                    <li><a href="/registration/">Registration Form</a></li>
+                                </ul>
+                            </li>
                             <li class="{% if request.resolver_match.url_name == 'charity' %}active{% endif %}">
                                 <a href="/charity/">Charity</a>
                             </li>
-                            <li
-                                class="has-dropdown {% if request.resolver_match.url_name == 'privacy_policy' or request.resolver_match.url_name == 'terms' %}active{% endif %}">
+                            <li class="has-dropdown {% if request.resolver_match.url_name == 'privacy_policy' or request.resolver_match.url_name == 'terms' %}active{% endif %}">
                                 <a href="#">Policy</a>
                                 <ul class="dropdown">
                                     <li><a href="/privacy-policy/">Privacy Policy</a></li>

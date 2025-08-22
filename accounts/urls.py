@@ -9,6 +9,8 @@ urlpatterns = [
     path("privacy-policy/", views.privacy_policy, name="privacy_policy"),
     path("terms-and-conditions/", views.terms, name="terms"),
     path("contact/", views.contact, name="contact"),
+    path("history/", views.history, name="history"),
+    path("registration_page/", views.registration_page, name="registration_page"),
 
     path("super-admin/login/", views.custom_admin_login, name="super_admin_login"),
     path("logout/", views.custom_admin_logout, name="super_admin_logout"),

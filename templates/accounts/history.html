@@ -7,9 +7,9 @@
     <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{% block title %}About Us - {{ wedding.title|default:"Wedding" }}{% endblock %}</title>
+    <title>{% block title %}History - {{ wedding.title|default:"Wedding" }}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{% block description %}{{ wedding.description|default:'Learn more about our wedding' %}{% endblock %}" />
+    <meta name="description" content="{% block description %}{{ wedding.description|default:'Learn more about our wedding' }}{% endblock %}" />
     <meta name="keywords" content="{% block keywords %}wedding, about, celebration, invitation{% endblock %}" />
     <meta name="author" content="{{ wedding.couple_names|default:'Happy Couple' }}" />
 
@@ -221,7 +221,7 @@
             .about-section .image-card {
                 padding: 10px;
             }
-            .about-section .image-card h3 {
+            .about-col-section .image-card h3 {
                 font-size: 1.3rem;
             }
             .about-section .image-card img {
@@ -305,8 +305,8 @@
 				<div class="col-md-8 col-md-offset-2 text-center">
 					<div class="display-t">
 						<div class="display-tc animate-box" data-animate-effect="fadeIn">
-							<h1>{% block header_title %}Contact Us{% endblock %}</h1>
-							<h2>{% block header_subtitle %}{{ wedding.contact_subtitle|default:"Get In Touch With Us" }}{% endblock %}</h2>
+							<h1>{% block header_title %}History{% endblock %}</h1>
+							<h2>{% block header_subtitle %}{{ wedding.contact_subtitle|default:"Know More About Us" }}{% endblock %}</h2>
 						</div>
 					</div>
 				</div>
@@ -315,32 +315,28 @@
 	</header>
 
 	{% block content %}
-	<div id="fh5co-couple" class="fh5co-section-gray">
+	<div id="fh5co-history" class="fh5co-section-gray">
 		<div class="container">
 			<div class="row" style="margin-top: 40px; margin-bottom: 40px;">
-				<div class="col-md-6 col-md-offset-3 text-center animate-box">
-					<div class="fh5co-contact-info">
-						<h3>Contact Information</h3>
-						<ul>
-							<li class="address">
-								{{ wedding.address_line1|default:"Palappuram Ottapalam" }}<br>
-								{{ wedding.address_line2|default:"" }} {{ wedding.city|default:"Palakkad" }} {{ wedding.state|default:"" }} {{ wedding.zip_code|default:"678001" }}
-							</li>
-							{% if wedding.phone %}
-								<li class="phone"><a href="tel://{{ wedding.phone }}">{{ wedding.phone }}</a></li>
-							{% else %}
-								<li class="phone"><a href="tel://1234567920">+91 94 46 87 59 49</a></li>
-							{% endif %}
-							{% if wedding.email %}
-								<li class="email"><a href="mailto:{{ wedding.email }}">{{ wedding.email }}</a></li>
-							{% else %}
-								<li class="email"><a href="mailto:info@wedding.com">kkmspalappuram@gmail.com</a></li>
-							{% endif %}
-							{% if wedding.website %}
-								<li class="url"><a href="{{ wedding.website }}" target="_blank">{{ wedding.website }}</a></li>
-							{% endif %}
-						</ul>
-					</div>
+				<div class="col-md-12 text-center animate-box">
+					<h2 class="text-center">History of KKMS (Kannavanraja Mudhal)</h2>
+					<p>Years back some peoples migrated from Tamilnadu and they have occupied some districts in Kerala. They are belonging to sivakulam or veabagotham tharam and they have engaged with "mathu" (weaving) mainly for kavaru pattu or meeting their family and their family day-to-day life. They belongs to tamil connected celebrations was also tamil even-then staying in Kerala and they have celebrated tamil festivals.</p>
+					<p>They are doing kathari (kuthirai) as they became "Kalakkan" and other name of "kudumbi" or "Mudhalvan" so they have also known as mathulai or mudhalai because they belongs to sivakulam or veabagotham tharam, so they have preserved devotional engagement connected with god's meditation.</p>
+					<p>Earlier days, in the days earlier kekking like cheran, cholan and pandian, ancient machinery conquered the field of the village of Palakad, Pachampalayam is the old village of kathari, the peoples from palakof tamilnadu are settled in one village and the village became and the creators of thriuvallaam koolathupady of "dharmacheri, cheramala of Coimbatore Thoothil (Employment)"</p>
+					<p>The main employment of kkalai is "kathari" pathu and some are denied to participate work gradually the birth of machinemills, they purchased happening articles from market and made kathari dresses and sell out in the market. Lastly private business entered but this is also not given stepped down in the circle of poverty these people are increased and gradually they are.</p>
+					<p>But, a nice change has been occurred when co-operative societies are started fortunately some peoples are make some modifications in the rebate scheme, so function of Kerala society has stopped like, travel, Palappuram, Palappuram etc., and huge amount had been lost in risky days.</p>
+					<p>Indus style they are living in Kerala, being having tamil culture has been lost, as the celebrations and festivals are tamil culture based and also Kerala culture based, mainly in the celebrations and Kerala style, especially the festivals like, Thiruvathira, Karthika deepam, connected with lord diva celebrating.</p>
+					<h3>Education</h3>
+					<p>Education is the success of life for all the human beings. But in traditional societies there are not healthy enough to know the knowledge of the peoples. The peoples are not having income from the thothil (employment) is very poor, so getting money is not possible almost all the times than daily home needs.</p>
+					<h3>Cultural Activities</h3>
+					<p>Kalai or Muthal category peoples are erected their own name in the cultural activity of Tholpavakoothu. This is one of the paper leather show, which bring our attention to the art of leather puppets and it is a person called Palappavakoothu. In summer season, there is a type of show called "Katha Kalakshepam" and the first artist of kalai category was one Mr. Krishnanarayan. But, Mr. Krishnanarayan died almost at the age of 60 years. Then Mundur Palappavakoothu was taken over by his famous kootu artist in the present century. He has lot of assistants are there, some are Mr. Krishnaprasad varaswamy palappuram annals pulavar and kept their own foot print in the tholpavakoothu, this category. Shri Annamal pulavar is famous one or dignified personality, the kanniyamman parshnath, pulavar, kanniyamman subramaniya pulavar etc., are also keeping their own foot print tholppavakoothu.</p>
+					<p>Like tholpavakoothu, udukkadipattu is also one of the other form of kalai category, it is mainly celebrated in the mariyamman kovil. Also in summer season, these drama also played in the open other mariyamman kovil premises.</p>
+					<h3>Other Festivals</h3>
+					<p>Other related importance considering other than the above is pongal pandaga. It is the presence of a brother-in-law Mariyamman Poopji, it is husband-wife relations story telling. In Kerala, there is Mariyamman but in Karnataka it is Ellamma, mariyamman is the god form of kolla, Vasudeva pramaya with all the locations are connected with mariyamman pooja, it may be temple.</p>
+					<p>All the locations are connected with mariyamman pooja, it may be bank of river, some villages are keeping "Thirukalyam". It is connected with same manner and in the deity of Shri Muthukumaranayanar also.</p>
+                    <p>In kaikola’s area, one “kadasikazhamai” festival also, it will celebrate the last Saturday of Malayalam month Kanni, it is connected with lord Vishnu.</p>
+                    <h3>Kerala Kaikola or Mudali</h3>
+                    <p>In Kerala financially, educationally and employment-wise also the stage of this category is very poor. Hence this peoples could/cannot rise-up due to the lack of education and financial set-up. Due to the poor stage of education and financial set-up they could not make a group or category for demanding their own needs and rights. In 1960 tried to make muthaliyar sangham/muthaliyar mahaajana sangham but failed and pushed to back-door. So, we have lost even our OBC category and deleted from the gazette also. As per the advise from the legal scholars now set-up one sangham i.e. Kerala Kaikola Muthali Sangham and got government registration also and got OBC certification. As per the direction of Kitharidar, done caste senses with the leadership of Shri Kuttappan chettiyar and formed Most Backward Community Federation (M B C F) and processing strongly now and OEC category benefits also. Now make a trust i.e. AMMA and purchased four cent land in Palappuram and fifteen women’s group also functioning properly.</p>
 				</div>
 			</div>
 		</div>

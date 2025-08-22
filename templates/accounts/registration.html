@@ -7,19 +7,19 @@
     <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{% block title %}About Us - {{ wedding.title|default:"Wedding" }}{% endblock %}</title>
+    <title>{% block title %}Registration - {{ wedding.title|default:"Wedding" }}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{% block description %}{{ wedding.description|default:'Learn more about our wedding' %}{% endblock %}" />
-    <meta name="keywords" content="{% block keywords %}wedding, about, celebration, invitation{% endblock %}" />
+    <meta name="description" content="{% block description %}{{ wedding.description|default:'Registration information for our wedding' }}{% endblock %}" />
+    <meta name="keywords" content="{% block keywords %}wedding, registration, forms, documents{% endblock %}" />
     <meta name="author" content="{{ wedding.couple_names|default:'Happy Couple' }}" />
 
       <!-- Facebook and Twitter integration -->
-    <meta property="og:title" content="About Us - {{ wedding.title|default:'Wedding Celebration' }}"/>
+    <meta property="og:title" content="Registration - {{ wedding.title|default:'Wedding Celebration' }}"/>
     <meta property="og:image" content="{% if wedding.og_image %}{{ wedding.og_image.url }}{% endif %}"/>
     <meta property="og:url" content="{{ request.build_absolute_uri }}"/>
     <meta property="og:site_name" content="{{ wedding.title|default:'Wedding' }}"/>
-    <meta property="og:description" content="Learn about our wedding celebration"/>
-    <meta name="twitter:title" content="About Us - {{ wedding.title|default:'Wedding Celebration' }}" />
+    <meta property="og:description" content="Registration information and documents"/>
+    <meta name="twitter:title" content="Registration - {{ wedding.title|default:'Wedding Celebration' }}" />
     <meta name="twitter:image" content="{% if wedding.og_image %}{{ wedding.og_image.url }}{% endif %}" />
     <meta name="twitter:url" content="{{ request.build_absolute_uri }}" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -140,101 +140,218 @@
             vertical-align: middle !important;
         }
 
-        /* Enhanced CSS for the image gallery */
-        .about-section .image-card {
-            position: relative;
-            overflow: hidden;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        /* Registration PDF Preview Styles */
+        .registration-section {
+            padding: 60px 0;
+        }
+        
+        .pdf-preview-container {
             background: #fff;
-            padding: 15px;
-            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
         }
-        .about-section .image-card:hover {
+        
+        .pdf-preview-container:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
-        .about-section .image-card img {
+        
+        .pdf-preview-header {
+            background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .pdf-preview-header h3 {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .pdf-preview-header p {
+            margin: 5px 0 0;
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+        
+        .pdf-image-container {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        
+        .pdf-preview-image {
             width: 100%;
             height: auto;
-            border-radius: 8px;
+            max-height: 600px;
+            object-fit: contain;
             transition: transform 0.3s ease;
-            object-fit: cover;
-            max-height: 250px;
+            background: #f8f9fa;
         }
-        .about-section .image-card:hover img {
-            transform: scale(1.05);
+        
+        .pdf-image-container:hover .pdf-preview-image {
+            transform: scale(1.02);
         }
-        .about-section .image-card h3 {
-            font-size: 1.5rem;
-            margin: 15px 0 10px;
-            color: #2B2B2B;
-            text-align: center;
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            text-transform: capitalize;
-            letter-spacing: 0.5px;
-        }
-        .about-section .image-card::before {
-            content: '';
+        
+        .pdf-overlay {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
+            right: 0;
+            bottom: 0;
+            background: rgba(74, 144, 226, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             opacity: 0;
-            transition: opacity 0.3s ease;
-            border-radius: 8px;
-            z-index: 1;
+            transition: all 0.3s ease;
         }
-        .about-section .image-card:hover::before {
+        
+        .pdf-image-container:hover .pdf-overlay {
             opacity: 1;
         }
-        /* New font styles for about-section text */
-        .about-section p {
-            font-family: 'Lora', serif;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #333;
-            margin-bottom: 20px;
-            font-weight: 400;
-            letter-spacing: 0.2px;
+        
+        .pdf-overlay-content {
+            text-align: center;
+            color: white;
         }
-        .about-section p strong {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            color: #2B2B2B;
+        
+        .pdf-overlay-content i {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .pdf-overlay-content span {
             font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .about-section h2.text-center {
+        
+        .pdf-actions {
+            padding: 20px;
+            text-align: center;
+            background: #f8f9fa;
+        }
+        
+        .btn-pdf-download {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            margin: 0 10px;
+        }
+        
+        .btn-pdf-download:hover {
+            background: linear-gradient(135deg, #218838 0%, #1e7e34 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .btn-pdf-view {
+            background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+            margin: 0 10px;
+        }
+        
+        .btn-pdf-view:hover {
+            background: linear-gradient(135deg, #357ABD 0%, #2E6DA4 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .registration-info {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-top: 40px;
+        }
+        
+        .registration-info h4 {
+            color: #2B2B2B;
             font-family: 'Playfair Display', serif;
             font-weight: 700;
-            color: #2B2B2B;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            letter-spacing: 1px;
-            text-transform: capitalize;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
         }
+        
+        .registration-info p {
+            font-family: 'Lora', serif;
+            line-height: 1.7;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .registration-info ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .registration-info ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-family: 'Lora', serif;
+            color: #666;
+        }
+        
+        .registration-info ul li:before {
+            content: '✓';
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
         @media (max-width: 768px) {
-            .about-section .image-card {
-                padding: 10px;
+            .pdf-preview-container {
+                margin: 20px 0;
             }
-            .about-section .image-card h3 {
-                font-size: 1.3rem;
+            
+            .pdf-actions {
+                padding: 15px;
             }
-            .about-section .image-card img {
-                max-height: 200px;
+            
+            .btn-pdf-download,
+            .btn-pdf-view {
+                margin: 5px;
+                padding: 10px 20px;
+                font-size: 0.9rem;
             }
-            .about-section p {
-                font-size: 1rem;
-            }
-            .about-section p strong {
-                font-size: 1.1rem;
-            }
-            .about-section h2.text-center {
+            
+            .pdf-overlay-content i {
                 font-size: 2rem;
+            }
+            
+            .pdf-overlay-content span {
+                font-size: 1rem;
             }
         }
     </style>
@@ -305,8 +422,8 @@
 				<div class="col-md-8 col-md-offset-2 text-center">
 					<div class="display-t">
 						<div class="display-tc animate-box" data-animate-effect="fadeIn">
-							<h1>{% block header_title %}Contact Us{% endblock %}</h1>
-							<h2>{% block header_subtitle %}{{ wedding.contact_subtitle|default:"Get In Touch With Us" }}{% endblock %}</h2>
+							<h1>{% block header_title %}Registration{% endblock %}</h1>
+							<h2>{% block header_subtitle %}{{ wedding.contact_subtitle|default:"Download Registration Forms" }}{% endblock %}</h2>
 						</div>
 					</div>
 				</div>
@@ -315,42 +432,79 @@
 	</header>
 
 	{% block content %}
-	<div id="fh5co-couple" class="fh5co-section-gray">
+	<div id="fh5co-registration" class="fh5co-section-gray registration-section">
 		<div class="container">
 			<div class="row" style="margin-top: 40px; margin-bottom: 40px;">
-				<div class="col-md-6 col-md-offset-3 text-center animate-box">
-					<div class="fh5co-contact-info">
-						<h3>Contact Information</h3>
+				<div class="col-md-8 col-md-offset-2">
+					<div class="pdf-preview-container animate-box" data-animate-effect="fadeInUp">
+						<div class="pdf-preview-header">
+							<h3>KKMS Registration Form</h3>
+							<p>Click on the image below to view the full PDF document</p>
+						</div>
+						
+						<div class="pdf-image-container" onclick="openPDF()">
+							<!-- Replace this src with your actual PDF preview image -->
+							<img src="{% static 'images/Screenshot (733).png' %}" 
+								 alt="Registration Form Preview" 
+								 class="pdf-preview-image">
+							
+							<div class="pdf-overlay">
+								<div class="pdf-overlay-content">
+									<i class="icon-eye"></i>
+									<span>Click to View PDF</span>
+								</div>
+							</div>
+						</div>
+						
+						<div class="pdf-actions">
+							<a href="{% static 'documents/KKMS REGISTRATION.pdf' %}" 
+							   class="btn-pdf-view" 
+							   target="_blank">
+								<i class="icon-eye"></i> View PDF
+							</a>
+							<a href="{% static 'documents/KKMS REGISTRATION.pdf' %}" 
+							   class="btn-pdf-download" 
+							   download>
+								<i class="icon-download"></i> Download PDF
+							</a>
+						</div>
+					</div>
+					
+					<div class="registration-info animate-box" data-animate-effect="fadeInUp">
+						<h4>Registration Instructions</h4>
+						<p>Please follow these steps to complete your KKMS registration:</p>
 						<ul>
-							<li class="address">
-								{{ wedding.address_line1|default:"Palappuram Ottapalam" }}<br>
-								{{ wedding.address_line2|default:"" }} {{ wedding.city|default:"Palakkad" }} {{ wedding.state|default:"" }} {{ wedding.zip_code|default:"678001" }}
-							</li>
-							{% if wedding.phone %}
-								<li class="phone"><a href="tel://{{ wedding.phone }}">{{ wedding.phone }}</a></li>
-							{% else %}
-								<li class="phone"><a href="tel://1234567920">+91 94 46 87 59 49</a></li>
-							{% endif %}
-							{% if wedding.email %}
-								<li class="email"><a href="mailto:{{ wedding.email }}">{{ wedding.email }}</a></li>
-							{% else %}
-								<li class="email"><a href="mailto:info@wedding.com">kkmspalappuram@gmail.com</a></li>
-							{% endif %}
-							{% if wedding.website %}
-								<li class="url"><a href="{{ wedding.website }}" target="_blank">{{ wedding.website }}</a></li>
-							{% endif %}
+							<li>Download and print the registration form</li>
+							<li>Fill out all required fields with accurate information</li>
+							<li>Attach required documents and photographs</li>
+							<li>Submit the completed form to our office or authorized representatives</li>
+							<li>Keep a copy for your records</li>
 						</ul>
+						
+						<h4 style="margin-top: 30px;">Required Documents</h4>
+						<p>Please ensure you have the following documents ready:</p>
+						<ul>
+							<li>Identity proof (Aadhaar Card, Passport, or Driver's License)</li>
+							<li>Address proof (Utility bill, Bank statement, etc.)</li>
+							<li>Caste certificate (if applicable)</li>
+							<li>Recent passport-size photographs</li>
+							<li>Educational certificates</li>
+						</ul>
+						
+						<div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-top: 20px;">
+							<h4 style="color: #4A90E2; margin-bottom: 15px;">Need Help?</h4>
+							<p style="margin-bottom: 10px;">If you have any questions about the registration process, please contact us:</p>
+							<p style="margin: 0; color: #666;">
+								<strong>Email:</strong> info@kkms.org<br>
+								<strong>Phone:</strong> +91 98765 43210<br>
+								<strong>Office Hours:</strong> Monday - Saturday, 9:00 AM - 6:00 PM
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-	{% if wedding.show_map and wedding.map_latitude and wedding.map_longitude %}
-	<div id="map" class="fh5co-map" data-lat="{{ wedding.map_latitude }}" data-lng="{{ wedding.map_longitude }}" data-zoom="{{ wedding.map_zoom|default:15 }}"></div>
-	{% elif wedding.show_map %}
-	<div id="map" class="fh5co-map"></div>
-	{% endif %}
 	{% endblock %}
 
 	<footer id="fh5co-footer" role="contentinfo">
@@ -398,16 +552,38 @@
 	<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
 	<script src="{% static 'js/magnific-popup-options.js' %}"></script>
 	
-	{% if wedding.show_map %}
-	<!-- Google Map -->
-	<script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&sensor=false"></script>
-	<script src="{% static 'js/google_map.js' %}"></script>
-	{% endif %}
-
 	<!-- Main -->
 	<script src="{% static 'js/main.js' %}"></script>
 
-	{% block extra_js %}{% endblock %}
+	{% block extra_js %}
+	<script>
+		function openPDF() {
+			// Open PDF in a new tab/window
+			window.open('{% static "documents/registration-form.pdf" %}', '_blank');
+		}
+		
+		// Add click tracking for better user experience
+		document.addEventListener('DOMContentLoaded', function() {
+			// Track PDF view clicks
+			const pdfButtons = document.querySelectorAll('.btn-pdf-view, .pdf-image-container');
+			pdfButtons.forEach(button => {
+				button.addEventListener('click', function() {
+					// You can add analytics tracking here if needed
+					console.log('PDF view clicked');
+				});
+			});
+			
+			// Track download clicks
+			const downloadButtons = document.querySelectorAll('.btn-pdf-download');
+			downloadButtons.forEach(button => {
+				button.addEventListener('click', function() {
+					// You can add analytics tracking here if needed
+					console.log('PDF download clicked');
+				});
+			});
+		});
+	</script>
+	{% endblock %}
 
 	</body>
 </html>

@@ -48,40 +48,6 @@
 
 	{% block extra_css %}
 	<style>
-		/* Navigation Styling */
-		.fh5co-nav {
-			position: relative;
-			z-index: 1000;
-			background: rgba(255, 255, 255, 0.95);
-			backdrop-filter: blur(10px);
-			box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-		}
-		.fh5co-nav .menu-1 ul {
-			display: flex !important;
-			align-items: center !important;
-			justify-content: flex-end !important;
-			flex-wrap: wrap !important;
-			margin: 0 !important;
-			padding: 0 !important;
-			list-style: none !important;
-		}
-		.fh5co-nav .menu-1 li {
-			display: inline-block !important;
-			margin-left: 15px !important;
-		}
-		.fh5co-nav .menu-1 li a {
-			color: #333;
-			text-decoration: none;
-			padding: 10px 15px;
-			border-radius: 5px;
-			transition: all 0.3s ease;
-			font-weight: 500;
-		}
-		.fh5co-nav .menu-1 li a:hover,
-		.fh5co-nav .menu-1 li.active a {
-			background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
-			color: white;
-		}
 		.login-btn-nav {
 			margin-left: 20px !important;
 		}
@@ -462,95 +428,59 @@
 <body>
 	<div class="fh5co-loader"></div>
 	<div id="page">
-		<!-- Mobile Menu Overlay -->
-		<div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-
-		<!-- Mobile Menu -->
-		<div class="mobile-menu" id="mobileMenu">
-			<div class="mobile-menu-header">
-				<h3>Menu</h3>
-				<button class="mobile-menu-close" id="mobileMenuClose">
-					<i class="icon-cross"></i>
-				</button>
-			</div>
-			<div class="mobile-menu-items">
-				<a href="/" class="mobile-menu-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
-					<i class="icon-home"></i> Home
-				</a>
-				<a href="/about/" class="mobile-menu-item {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
-					<i class="icon-info"></i> About KKMS
-				</a>
-				<a href="/charity/" class="mobile-menu-item {% if request.resolver_match.url_name == 'charity' %}active{% endif %}">
-					<i class="icon-heart"></i> Charity
-				</a>
-				<a href="#" class="mobile-menu-item {% if request.resolver_match.url_name == 'privacy_policy' or request.resolver_match.url_name == 'terms' %}active{% endif %}">
-					<i class="icon-shield"></i> Policy
-				</a>
-				<a href="/contact/" class="mobile-menu-item {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
-					<i class="icon-phone"></i> Contact
-				</a>
-				<a href="/register-customer/" class="mobile-menu-item {% if request.resolver_match.url_name == 'register' %}active{% endif %}">
-					<i class="icon-users"></i> Matrimony Register
-				</a>
-			</div>
-			<div class="mobile-login-section">
-				<a href="/customer-login/" class="mobile-btn-login">
-					<i class="icon-user"></i> Login
-				</a>
-			</div>
-		</div>
-
 		<!-- Navigation -->
-		<nav class="fh5co-nav" role="navigation">
-			<div class="container">
-				<div class="row">
-					<div class="col-xs-2">
-						<div id="fh5co-logo">
-							<a href="{% url 'home' %}">
-								<img src="{% static 'images/logo.png' %}" alt="KKMS Logo" style="height: 40px;">
-							</a>
-						</div>
-					</div>
-					<div class="col-xs-10 text-right menu-1">
-						<!-- Hamburger Menu Button (Mobile Only) -->
-						<button class="hamburger-menu" id="hamburgerMenu">
-							<span class="hamburger-line"></span>
-							<span class="hamburger-line"></span>
-							<span class="hamburger-line"></span>
-						</button>
-						<ul>
-							<li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
-								<a class="nav-link" href="/">Home</a>
-							</li>
-							<li class="nav-item {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
-								<a class="nav-link" href="/about/">About KKMS</a>
-							</li>
-							<li class="nav-item {% if request.resolver_match.url_name == 'charity' %}active{% endif %}">
-								<a class="nav-link" href="/charity/">Charity</a>
-							</li>
-							<li class="nav-item dropdown {% if request.resolver_match.url_name == 'privacy_policy' or request.resolver_match.url_name == 'terms' %}active{% endif %}">
-								<a class="nav-link" href="#">Policy</a>
-								<ul class="dropdown">
-									<li><a href="/privacy-policy/">Privacy Policy</a></li>
-									<li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
-								</ul>
-							</li>
-							<li class="nav-item {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
-								<a class="nav-link" href="/contact/">Contact</a>
-							</li>
-							<li class="nav-item {% if request.resolver_match.url_name == 'register' %}active{% endif %}">
-								<a class="nav-link" href="/register-customer/">Matrimony Register</a>
-							</li>
-							<li class="nav-item login-btn-nav">
-								<a href="/customer-login/" class="btn-login">
-									<i class="icon-user"></i> Login
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</nav>
+        <nav class="fh5co-nav" role="navigation">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <!-- Logo Image instead of text -->
+                        <div id="fh5co-logo">
+                            <a href="{% url 'home' %}">
+                                <img src="{% static 'images/logo.png' %}" alt="KKMS Logo" style="height: 40px;">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xs-10 text-right menu-1">
+                        <ul>
+                            <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                                <a href="/">Home</a>
+                            </li>
+                            <li class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                                <a href="/about/">About KKMS</a>
+                            </li>
+                            <li class="has-dropdown {% if request.resolver_match.url_name == 'history' or request.resolver_match.url_name == 'registration' %}active{% endif %}">
+                                <a href="#">Information</a>
+                                <ul class="dropdown">
+                                    <li><a href="/history/">History</a></li>
+                                    <li><a href="/registration/">Registration Form</a></li>
+                                </ul>
+                            </li>
+                            <li class="{% if request.resolver_match.url_name == 'charity' %}active{% endif %}">
+                                <a href="/charity/">Charity</a>
+                            </li>
+                            <li class="has-dropdown {% if request.resolver_match.url_name == 'privacy_policy' or request.resolver_match.url_name == 'terms' %}active{% endif %}">
+                                <a href="#">Policy</a>
+                                <ul class="dropdown">
+                                    <li><a href="/privacy-policy/">Privacy Policy</a></li>
+                                    <li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
+                                </ul>
+                            </li>
+                            <li class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+                                <a href="/contact/">Contact</a>
+                            </li>
+                            <li class="{% if request.resolver_match.url_name == 'register' %}active{% endif %}">
+                                <a href="/register-customer/">Matrimony Register</a>
+                            </li>
+                            <li class="login-btn-nav">
+                                <a href="/customer-login/" class="btn-login">
+                                    <i class="icon-user"></i> Login
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
 		
 		<!-- Hero/Banner Section -->
 		<section class="hero-section" style="background-image: url('{{ banner.banner_image.url }}');">
