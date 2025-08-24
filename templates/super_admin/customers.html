@@ -266,6 +266,17 @@
             transform: scale(1.1);
         }
 
+        /* Customer ID Badge */
+        .customer-id-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 280px;
@@ -368,7 +379,8 @@
                 <table id="customerTable" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Customer ID</th>
+                            <th>ID Proof</th>
                             <th>Picture</th>
                             <th>Name</th>
                             <th>Email</th>
@@ -384,6 +396,11 @@
                     <tbody>
                         {% for customer in customers %}
                         <tr>
+                            <td>
+                                <span class="customer-id-badge">
+                                    <i class="fas fa-id-card me-1"></i>{{ customer.id }}
+                                </span>
+                            </td>
                             <td>{{ customer.id_proof }}</td>
                             <td>
                                 {% if customer.profile_image %}
@@ -439,15 +456,15 @@
             }
         }
 
-$(document).ready(function () {
-    $('#customerTable').DataTable({
-        "order": [[3, "asc"]], // replace 3 with the index of your "Joined Date" column
-        "pageLength": 10,
-        "columnDefs": [
-            { "type": "date", "targets": 3 } // tells DataTables it's a date column
-        ]
-    });
-});
+        $(document).ready(function () {
+            $('#customerTable').DataTable({
+                "order": [[10, "desc"]], // Sort by Joined Date column (index 10) in descending order
+                "pageLength": 10,
+                "columnDefs": [
+                    { "type": "date", "targets": 10 } // tells DataTables it's a date column
+                ]
+            });
+        });
     </script>
 </body>
 

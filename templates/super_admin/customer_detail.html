@@ -24,6 +24,37 @@
             margin: 0 auto;
         }
 
+        /* Back Button Styles */
+        .back-button {
+            margin-bottom: 2rem;
+        }
+
+        .btn-back {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background: linear-gradient(135deg, #5a6268 0%, #3d4146 100%);
+            transform: translateY(-2px);
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-back:active {
+            transform: translateY(0);
+        }
+
         h5 {
             color: #667eea;
             font-weight: bold;
@@ -100,6 +131,18 @@
 
         .btn-secondary:active {
             transform: translateY(0);
+        }
+
+        /* Customer ID Display */
+        .customer-id-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
         }
 
         /* Modal Styles */
@@ -216,6 +259,19 @@
 
 <body>
     <div class="profile-container">
+        <!-- Back Button -->
+        <div class="back-button">
+            <a href="{% url 'customer-list' %}" class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+                Back to Customer List
+            </a>
+        </div>
+
+        <!-- Customer ID Display -->
+        <div class="customer-id-badge">
+            <i class="fas fa-id-card me-2"></i>Customer ID: {{ customer.id }}
+        </div>
+
         <div class="row">
             <div class="col-md-6">
                 {% if customer.profile_image %}
