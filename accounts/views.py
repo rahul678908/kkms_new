@@ -25,6 +25,7 @@ from django.utils.timezone import make_aware
 from datetime import datetime
 import os
 from django.utils import timezone
+from django.db import transaction
 
 def registration_page(request):
     return render(request, "accounts/registration.html")
@@ -461,7 +462,19 @@ def about_us_list(request):
     )
 
 # -----------------ABOUT US DELETE VIEW---------------   
-
+@require_POST
+def about_us_delete(request, pk):
+    """Delete about us entry"""
+    about_us = get_object_or_404(AboutUs, pk=pk)
+    title = about_us.main_title
+    
+    try:
+        about_us.delete()
+        messages.success(request, f'About Us entry "{title}" deleted successfully!')
+    except Exception as e:
+        messages.error(request, f'Error deleting about us entry: {str(e)}')
+    
+    return redirect('about-us-list')
 
 def about_us_image_delete(request, pk):
     if request.method == "POST":
@@ -469,6 +482,43 @@ def about_us_image_delete(request, pk):
         image.delete()
         return JsonResponse({"success": True})
     return JsonResponse({"success": False}, status=400)
+
+# -----------------ABOUT US EDIT VIEW---------------
+def about_us_edit(request, pk):
+    """Edit existing about us entry"""
+    about_us = get_object_or_404(AboutUs, pk=pk)
+    
+    if request.method == 'POST':
+        try:
+            # Update basic fields
+            about_us.main_title = request.POST.get('main_title')
+            about_us.mission = request.POST.get('mission')
+            about_us.affiliation = request.POST.get('affiliation')
+            about_us.history = request.POST.get('history')
+            about_us.is_active = request.POST.get('is_active', '0') == '1'
+            about_us.save()
+            
+            # Handle new image uploads
+            images = request.FILES.getlist('images[]')
+            designations = request.POST.getlist('designations[]')
+            
+            for i, image in enumerate(images):
+                if image:
+                    designation = designations[i] if i < len(designations) else ''
+                    AboutUsImage.objects.create(
+                        about_us=about_us,
+                        image=image,
+                        designation=designation,
+                        is_active=True
+                    )
+            
+            messages.success(request, f'About Us entry "{about_us.main_title}" updated successfully!')
+            
+        except Exception as e:
+            messages.error(request, f'Error updating about us entry: {str(e)}')
+    
+    return redirect('about-us-list')
+
 
 # -----------------BANNER LIST VIEW---------------
 def banner_list_view(request):
@@ -512,9 +562,8 @@ def banner_edit(request, pk):
 # -----------------BANNER DELETE VIEW---------------
 def banner_delete(request, pk):
     banner = get_object_or_404(Banners, pk=pk)
-    banner.is_active = False  # soft delete
-    banner.save()
-    return redirect('banner-list') 
+    banner.delete()  
+    return redirect('banner-list')
 
 # -----------------CONTACT VIEW---------------
 def contact(request):
@@ -568,11 +617,16 @@ def customer_list(request):
     return render(request, 'super_admin/customers.html', {'customers': customers})
 
 def delete_customer(request, id):
-    customer = get_object_or_404(Customer, id=id)
-    customer.is_active = False
-    customer.save()
+    customer = get_object_or_404(Customer, id=id)    
+    try:
+        with transaction.atomic():
+            user = customer.user
+            customer.delete()
+            user.delete()
+            messages.success(request, 'Customer and associated user account deleted successfully.')
+    except Exception as e:
+        messages.error(request, f'Error deleting customer: {str(e)}')
     return redirect('customer-list')
-
 
 @login_required
 def customer_dashboard(request):

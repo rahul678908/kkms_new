@@ -46,7 +46,8 @@ urlpatterns = [
     path("about-us/", views.about_us_list, name="about-us-list"),
     path('about-us/add/', views.about_us_add, name='about-us-add'),
     path("about-us/image-delete/<int:pk>/", views.about_us_image_delete, name="about-us-image-delete"),
-    
+    path('about-us/delete/<int:pk>/', views.about_us_delete, name='about-us-delete'),
+    path('about-us/edit/<int:pk>/', views.about_us_edit, name='about-us-edit'),
 
     path('register-customer/', views.register_customer, name='register_customer'),
     path('customer-login/', views.customer_login, name='customer-login'),
